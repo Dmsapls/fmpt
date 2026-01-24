@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>By Students, For Students — FMPT Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --gold:#FFA700;
+      --blue:#0C4D9B;
+      --deep:#071B33;
+      --soft:#F4F7FB;
+      --accent:#E6C36A;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(1200px 800px at 10% -10%, rgba(255,167,0,0.15), transparent 40%),
+                 radial-gradient(800px 600px at 90% 10%, rgba(12,77,155,0.25), transparent 45%),
+                 linear-gradient(180deg, #050E1B, #071B33 60%, #050E1B);
+      color:#EAF0F7;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    header{
+      position:fixed;top:0;left:0;right:0;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 48px;z-index:10;
+      background:linear-gradient(180deg, rgba(7,27,51,0.75), rgba(7,27,51,0));
+      backdrop-filter: blur(6px);
+    }
+
+    .logo-slot{
+      width:140px;height:48px;
+      border-radius:10px;
+      border:1px dashed rgba(255,255,255,0.25);
+      display:flex;align-items:center;justify-content:center;
+      color:rgba(255,255,255,0.6);
+      font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+    }
+
+    .badge{
+      padding:8px 14px;border-radius:999px;
+      background:rgba(255,167,0,0.12);
+      color:var(--gold);
+      font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+      border:1px solid rgba(255,167,0,0.35);
+    }
+
+    main{
+      padding:160px 24px 80px;
+      max-width:1100px;margin:auto;text-align:center;
+    }
+
+    h1{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(42px,7vw,76px);
+      line-height:1.05;
+      margin-bottom:24px;
+      background:linear-gradient(90deg, #FFF3C4, var(--gold), #8FC2FF);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+
+    .subtitle{
+      max-width:760px;margin:0 auto 36px;
+      font-size:clamp(16px,2.4vw,20px);
+      color:#C7D5E6;
+    }
+
+    .tagline{
+      display:inline-block;
+      font-family:'Playfair Display',serif;
+      font-size:22px;
+      margin-bottom:12px;
+      color:#F7E6B5;
+    }
+
+    .cta-row{
+      display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:20px
+    }
+
+    .btn{
+      padding:14px 28px;border-radius:14px;font-weight:500;
+      border:1px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.06);color:white;cursor:pointer;
+      transition:.3s ease;backdrop-filter: blur(8px);
+      text-decoration:none;display:inline-block
+    }
+    .btn.primary{
+      background:linear-gradient(135deg, var(--gold), #FFD36B);
+      color:#3B2A00;border:none;
+      box-shadow:0 12px 30px rgba(255,167,0,0.35)
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,0.25)}
+
+    .features{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:24px;margin-top:90px
+    }
+
+    .card{
+      padding:28px;border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.15);
+      text-align:left;
+      backdrop-filter: blur(10px);
+      opacity:0;transform:translateY(20px);transition:all .8s ease
+    }
+    .card.show{opacity:1;transform:none}
+
+    .card h3{
+      font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px;color:#FFF2C7
+    }
+
+    .card p{color:#C7D5E6;font-size:15px}
+
+    footer{
+      text-align:center;padding:40px 24px;color:#9FB4CF;font-size:14px
+    }
+
+    .glow{
+      position:absolute;inset:auto auto 10% 50%;
+      width:600px;height:600px;transform:translateX(-50%);
+      background:radial-gradient(circle at center, rgba(255,167,0,0.2), transparent 65%);
+      filter:blur(80px);z-index:-1
+    }
+
+    .modal{
+      position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:20
+    }
+    .modal.active{display:flex}
+    .modal-box{
+      background:#071B33;border-radius:24px;padding:32px;max-width:420px;width:90%;border:1px solid rgba(255,255,255,.2)
+    }
+
+    @media(max-width:600px){
+      header{padding:16px 20px}
+      .logo-slot{width:120px;height:42px}
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <header>
+    <div class="logo-slot">LOGO</div>
+    <span class="badge">Coming Soon</span>
+  </header>
+
+  <main>
+    <span class="tagline">By students, for students.</span>
+    <h1>Your Academic Hub for Medical Students</h1>
+    <div style="margin-bottom:10px;font-size:13px;letter-spacing:.12em;color:#9FB4CF;text-transform:uppercase">Faculté de Médecine et de Pharmacie de Tanger (FMPT)</div>
+    <p class="subtitle">
+      A private, elegant space built for medical students to share documents, past exams,
+      schedules, and essential resources. Mostly free. Always student‑driven.
+    </p>
+
+    <div class="cta-row">
+      <button class="btn primary" id="waitlistBtn">Join the Waitlist</button>
+      <a class="btn" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">Get Notified at Launch</a>
+    </div>
+
+    <section class="features">
+      <div class="card">
+        <h3>📚 Smart Resources</h3>
+        <p>Access organized documents, lecture notes, and past exams in one beautiful space.</p>
+      </div>
+      <div class="card">
+        <h3>🗓️ Shared Schedules</h3>
+        <p>Never miss a deadline. Stay synced with your promotion and study groups.</p>
+      </div>
+      <div class="card">
+        <h3>🤝 Built by You</h3>
+        <p>Built by FMPT students — by students, for students.</p>
+      </div>
+      <div class="card">
+        <h3>🔒 Clean & Secure</h3>
+        <p>Private access. Your data, your community, your rules.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 — FMPT Student Hub · Mostly Free · Always Elegant
+  </footer>
+  <div class="modal" id="waitlistModal">
+    <div class="modal-box">
+      <h3 style="font-family:Playfair Display,serif;margin-bottom:12px">Join the Waitlist</h3>
+      <p style="color:#C7D5E6;margin-bottom:16px">Leave your email and we’ll notify you when FMPT Hub launches.</p>
+      <form id="waitlistForm" action="https://formspree.io/f/xwvlzpyy" method="POST">
+        <input type="email" name="email" required placeholder="you@email.com" style="width:100%;padding:12px;border-radius:10px;border:none;margin-bottom:12px" />
+        <button class="btn primary" style="width:100%">Notify Me</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="thanksModal">
+    <div class="modal-box">
+      <h3 style="font-family:Playfair Display,serif;margin-bottom:12px">Thank you 🤍</h3>
+      <p style="color:#C7D5E6;margin-bottom:16px">You’re on the list! You’ll be notified when we launch — very soon (end of February).</p>
+      <button class="btn primary" style="width:100%" id="closeThanks">Got it</button>
+    </div>
+  </div>
+
+  <script>
+    const cards=document.querySelectorAll('.card');
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})
+    },{threshold:.2});
+    cards.forEach(c=>observer.observe(c));
+
+    const modal=document.getElementById('waitlistModal');
+    document.getElementById('waitlistBtn').onclick=()=>modal.classList.add('active');
+    modal.onclick=e=>{if(e.target===modal)modal.classList.remove('active')};
+
+    const form=document.getElementById('waitlistForm');
+    const thanks=document.getElementById('thanksModal');
+    const closeThanks=document.getElementById('closeThanks');
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data=new FormData(form);
+      await fetch(form.action,{method:'POST',body:data,headers:{'Accept':'application/json'}});
+      modal.classList.remove('active');
+      thanks.classList.add('active');
+      form.reset();
+    });
+
+    thanks.onclick=e=>{if(e.target===thanks)thanks.classList.remove('active')};
+    closeThanks.onclick=()=>thanks.classList.remove('active');
+  </script>
+</body>
+</html>
