@@ -3,1764 +3,454 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FMPT Hub — Dashboard</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>By Students, For Students — FMPT Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --gold:#FFA700;--blue:#0C4D9B;--deep:#071B33;--soft:#F4F7FB;--accent:#E6C36A;
-      --glass:rgba(255,255,255,.08);--border:rgba(255,255,255,.18);
-      --text:#EAF0F7;--muted:#C7D5E6;
+      --gold:#FFA700;
+      --blue:#0C4D9B;
+      --deep:#071B33;
+      --soft:#F4F7FB;
+      --accent:#E6C36A;
+      --text:#EAF0F7;
+      --muted:#C7D5E6;
+      --border: rgba(255,255,255,0.15);
+      --glass: rgba(255,255,255,0.06);
     }
     *{box-sizing:border-box;margin:0;padding:0}
     body{
-      font-family:Inter,system-ui,sans-serif;
-      background:radial-gradient(1200px 800px at 10% -10%, rgba(255,167,0,0.15), transparent 40%),
-                 radial-gradient(800px 600px at 90% 10%, rgba(12,77,155,0.25), transparent 45%),
-                 linear-gradient(180deg, #050E1B, #071B33 60%, #050E1B);
-      color:var(--text);min-height:100vh;overflow-x:hidden;
-    }
-    header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;background:linear-gradient(180deg, rgba(7,27,51,.75), rgba(7,27,51,.35));backdrop-filter: blur(10px);border-bottom:1px solid rgba(255,255,255,.08);}    
-    .left{display:flex;align-items:center;gap:14px}
-    .logo{width:120px;height:42px;border-radius:10px;border:1px dashed rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:12px}
-    .selectors{display:flex;gap:10px}
-    select{background:var(--glass);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:10px 12px}
-    main{max-width:1200px;margin:auto;padding:28px 20px 80px}
-    
-    /* ---- Modular, unbalanced layout (no strict grid) ---- */
-    .stack{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));border:1px solid var(--border);border-radius:22px;padding:22px;max-width: 100%;min-width: 0}
-    .card h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:10px;color:#FFF2C7}
-    .muted{color:var(--muted)}
-
-    /* Different widths to keep things unbalanced */
-    .w-60{flex:1 1 60%}
-    .w-40{flex:1 1 38%}
-    .w-50{flex:1 1 48%}
-    .w-30{flex:1 1 30%}
-    .w-70{flex:1 1 68%}
-    .w-100{
-  flex: 1 1 100%;
-}
-
-
-    @media (max-width: 900px){
-      .w-60,.w-40,.w-50,.w-30,.w-70{flex:1 1 100%}
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(255,167,0,0.15), transparent 40%),
+        radial-gradient(800px 600px at 90% 10%, rgba(12,77,155,0.25), transparent 45%),
+        linear-gradient(180deg, #050E1B, #071B33 60%, #050E1B);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
     }
 
-
-/* ===== Support Button Animations ===== */
-
-.support{
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  background: linear-gradient(135deg, #FFA700, #FFD36B);
-  color: #3B2A00;
-
-  padding: 12px 18px;
-  border-radius: 16px;
-  font-weight: 700;
-
-  box-shadow: 0 0 0 rgba(255,167,0,0);
-  transition: all .25s ease;
-}
-
-/* Hover: glow + pulse */
-.support:hover{
-  box-shadow:
-    0 0 15px rgba(255,167,0,.6),
-    0 0 35px rgba(255,167,0,.25);
-
-  animation: heartBeat .8s ease-in-out infinite alternate;
-  transform: translateY(-1px) scale(1.02);
-}
-
-/* Click press */
-.support:active{
-  transform: scale(.95);
-  box-shadow: 0 0 6px rgba(255,167,0,.4);
-}
-
-/* Heartbeat animation */
-@keyframes heartBeat{
-  from{ transform: scale(1.02); }
-  to{ transform: scale(1.06); }
-}
-
-/* Floating hearts */
-.support-heart{
-  position:absolute;
-  pointer-events:none;
-  font-size:14px;
-  animation: floatUp .9s ease-out forwards;
-  opacity:.9;
-}
-
-@keyframes floatUp{
-  from{
-    transform: translateY(0) scale(1);
-    opacity:1;
-  }
-  to{
-    transform: translateY(-40px) scale(.3);
-    opacity:0;
-  }
-}
-    
-.course-item {
-  padding: 8px 10px;
-  margin-bottom: 6px;
-  border-radius: 10px;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.15);
-  min-height: 36px; /* height of one course row */
-}
-
-#clubsGrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-  gap:10px;
-}
-.club-item{
-  padding:10px 12px;
-  border-radius:14px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.18);
-  text-align:center;
-  font-weight:500;
-  cursor:pointer;
-  transition:.2s ease;
-}
-.club-item:hover{
-  background:rgba(255,255,255,.16);
-  transform:translateY(-2px);
-}
-/* Shared Slot Styles */
-.slot-list{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.slot-card{
-  padding:12px 14px;
-  border-radius:14px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.18);
-  transition:.2s ease;
-  cursor:pointer;
-}
-
-.slot-card:hover{
-  background:rgba(255,255,255,.16);
-  transform:translateY(-2px);
-}
-
-.slot-title{
-  font-weight:600;
-  font-size:15px;
-}
-
-.slot-desc{
-  font-size:12px;
-  opacity:.7;
-  margin-top:4px;
-}
-
-
-.pomo{display:flex;flex-direction:column;align-items:center;gap:14px}
-.dial{
-  width:160px;height:160px;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, #FFD36B, #FFA700);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 0 6px rgba(255,255,255,.1), 0 20px 40px rgba(0,0,0,.4);
-}
-#pomoTime{font-size:32px;font-weight:600;color:#3B2A00}
-.pomo-controls{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.pomo-btn,#pomoStart,#pomoStop{
-  padding:8px 12px;border-radius:10px;border:none;
-  background:rgba(255,255,255,.12);color:white;cursor:pointer
-}
-#pomoCustom{width:60px;padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:white}
-/* ===== Weekly Timetable Module (CSS) ===== */
-.tt-top{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-  margin-bottom:12px;
-}
-
-.tt-left{display:flex;flex-direction:column;gap:4px}
-
-.tt-title{
-  font-weight:700;
-  font-size:16px;
-  letter-spacing:.02em;
-}
-
-.tt-sub{
-  font-size:12px;
-  opacity:.85;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.tt-dot{opacity:.6}
-
-.tt-actions{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.tt-nav{
-  padding:10px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.08);
-  color:#EAF0F7;
-  cursor:pointer;
-  transition:.2s ease;
-  font-size:12px;
-  white-space:nowrap;
-}
-
-.tt-nav:hover{
-  background:rgba(255,255,255,.14);
-  transform:translateY(-1px);
-}
-
-.tt-today{
-  padding:10px 14px;
-  border-radius:14px;
-  border:none;
-  background:linear-gradient(135deg, var(--gold), #FFD36B);
-  color:#3B2A00;
-  cursor:pointer;
-  transition:.2s ease;
-  font-weight:700;
-  font-size:12px;
-}
-
-.tt-today:hover{transform:translateY(-1px)}
-
-.tt-wrap{
-  border-radius:18px;
-  padding:10px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.10);
-  overflow:auto;
-  width: 100%;
-  max-width: 100%;
-
-}
-@media (max-width: 750px){
-  .card.w-50{
-    width: 100%;
-    max-width: 100%;
-  }
-}
-
-
-/* Grid */
-.tt-grid{
-  display:grid;
-  grid-template-columns:140px repeat(7, 1fr);
-  gap:8px;
-  min-width:900px; /* lets it scroll horizontally on small screens */
-}
-
-/* Headers */
-.tt-head{
-  padding:10px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.06);
-  font-size:12px;
-  color:#C7D5E6;
-}
-
-/* Slot labels */
-.tt-slot{
-  padding:10px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.06);
-  font-size:12px;
-  color:#C7D5E6;
-  display:flex;
-  align-items:center;
-}
-
-/* Cells */
-.tt-cell{
-  min-height:78px;
-  padding:10px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.05);
-  overflow:hidden;
-  position:relative;
-}
-
-/* Today highlight (cell) */
-.tt-cell.today{
-  border-color:rgba(255,167,0,.55);
-  box-shadow:0 0 0 3px rgba(255,167,0,.12);
-}
-
-/* Chips */
-.tt-chip{
-  display:block;
-  padding:8px 10px;
-  border-radius:12px;
-  background:rgba(12,77,155,.20);
-  border:1px solid rgba(143,194,255,.22);
-  margin-bottom:6px;
-  font-size:12px;
-  line-height:1.25;
-}
-
-.tt-chip b{
-  display:block;
-  color:#EAF0F7;
-  font-weight:700;
-}
-
-.tt-chip span{
-  display:block;
-  opacity:.82;
-  font-size:11px;
-  margin-top:2px;
-}
-
-
-.sem-tabs{
-  display:flex;
-  gap:10px;
-  margin-bottom:10px;
-  flex-wrap:wrap;
-}
-.sem-btn{
-  padding:8px 12px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.08);
-  color:#EAF0F7;
-  cursor:pointer;
-  transition:.2s ease;
-  font-weight:600;
-}
-.sem-btn:hover{
-  background:rgba(255,255,255,.14);
-  transform:translateY(-1px);
-}
-.sem-btn.active{
-  background:linear-gradient(135deg, var(--gold), #FFD36B);
-  color:#3B2A00;
-  border:none;
-}
-/* ===== Announcements (max 6 visible + scroll) ===== */
-.ann-box{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-
-  /* roughly 6 items visible; adjust if your card padding differs */
-  max-height: 360px;
-  overflow:auto;
-  padding-right:6px;
-}
-
-.ann-item{
-  padding:12px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.06);
-}
-
-.ann-top{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.ann-title{
-  font-weight:800;
-  font-size:13px;
-  color:#EAF0F7;
-  line-height:1.2;
-}
-
-.ann-date{
-  font-size:11px;
-  opacity:.75;
-  white-space:nowrap;
-}
-
-.ann-msg{
-  margin-top:6px;
-  font-size:12px;
-  line-height:1.35;
-  color:rgba(255,255,255,.85);
-}
-
-.ann-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  margin-top:8px;
-  font-size:11px;
-  padding:5px 9px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.06);
-  opacity:.92;
-}
-
-.ann-item.urgent{
-  border-color: rgba(255, 90, 90, .45);
-  background: rgba(255, 90, 90, .10);
-}
-.ann-item.exam{
-  border-color: rgba(255, 167, 0, .40);
-  background: rgba(255, 167, 0, .10);
-}
-.ann-item.info{
-  border-color: rgba(120, 190, 255, .35);
-  background: rgba(12, 77, 155, .10);
-}
-
-/* Nice scrollbar */
-.ann-box::-webkit-scrollbar{width:10px}
-.ann-box::-webkit-scrollbar-track{background:rgba(255,255,255,.05);border-radius:999px}
-.ann-box::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:999px}
-.ann-box::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.25)}
-
-/* ===== Announcements Navigation ===== */
-.ann-nav{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.ann-nav button{
-  padding:6px 12px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.08);
-  color:#EAF0F7;
-  cursor:pointer;
-  font-size:12px;
-  transition:.2s;
-}
-
-.ann-nav button:hover{
-  background:rgba(255,255,255,.14);
-}
-
-.ann-nav button:disabled{
-  opacity:.4;
-  cursor:not-allowed;
-}
-
-/* Make announcement card shorter */
-/* Make the announcements card shorter, but keep it functional */
-.card.ann-card{
-  max-height: 335px;              /* tweak 280–360 */
-  display:flex;
-  flex-direction:column;
-}
-
-/* IMPORTANT: allows the inner scroll area to shrink inside flex */
-.card.ann-card .ann-box{
-  flex: 1;
-  min-height: 0;                 /* <-- key line for scrolling in flex */
-  overflow: auto;                /* keep scroll working */
-  padding-right: 6px;
-}
-
-/* Keep nav always visible at top */
-.card.ann-card .ann-nav{
-  flex: 0 0 auto;
-  margin-bottom: 10px;
-}
-/* Make course items clickable buttons */
-.course-link{
-  display:block;
-  text-decoration:none;
-  color:var(--text);
-
-  padding:10px 12px;
-  margin-bottom:7px;
-
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.15);
-  background:rgba(255,255,255,.06);
-
-  transition:transform .18s ease, background .18s ease, border-color .18s ease;
-}
-
-.course-link:hover{
-  background:rgba(255,167,0,.14);
-  border-color:rgba(255,167,0,.45);
-  transform:translateX(2px);
-}
-
-/* Calendar wrapper */
-
-/* Mobile tuning */
-/* ===== Desktop (leave your current styles as-is) ===== */
-/* Do NOT change your existing .tt-grid / .tt-slot sizes here */
-
-/* ===== Mobile-only overrides ===== */
-
-
-/* =========================
-   Mobile timetable fix
-   Put this at the END of your CSS
-========================= */
-/* =========================
-   MOBILE OVERRIDES — paste at end
-   Desktop remains unchanged
-========================= */
-@media (max-width: 750px){
-
-  /* Make the timetable area scrollable vertically too */
-  .tt-wrap{
-    max-height: 420px;          /* vertical scroll area on mobile */
-    overflow: auto;             /* keep x + y scrolling */
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Force fixed column widths so it behaves on mobile */
-  .tt-grid{
-    min-width: 0;               /* cancel the old rule */
-    width: max-content;         /* grow to fit fixed columns */
-grid-template-columns: 74px repeat(7, 108px);
-/* SMALL time col */
-  }
-
-  /* Shrink time slots (left column) */
-  .tt-slot{
-    padding: 6px 6px;
-    font-size: 11px;
-    line-height: 1.15;
-    justify-content: center;
-    text-align: center;
-    white-space: normal;        /* allow wrapping */
-  }
-
-  /* Also shrink the first header cell ("Time") */
-  .tt-grid > .tt-head:first-child{
-    padding: 6px 6px;
-    font-size: 11px;
-    text-align: center;
-  }
-
-  /* Slightly tighter day headers/cells */
-  .tt-head{
-    padding: 6px 6px;
-    font-size: 11px;
-  }
-
-  .tt-cell{
-    padding: 6px;
-    min-height: 64px;
-  }
-
-  .tt-chip{
-    padding: 6px 7px;
-    font-size: 11px;
-  }
-
-  .tt-chip span{
-    font-size: 10px;
-  }
-}
-/* =========================
-   Mobile Header Fix
-========================= */
-@media (max-width: 750px){
-
-  header{
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 12px 14px;
-  }
-
-  /* Left side (logo + selectors) */
-  header .left{
-    width: 100%;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  /* Selectors (year / major) */
-  .selectors{
-    gap: 6px;
-  }
-
-  .selectors select{
-    padding: 7px 9px;
-    font-size: 11px;
-    border-radius: 10px;
-  }
-
-  /* Support / buttons on right */
-  header .support,
-  header .btn{
-    padding: 7px 10px;
-    font-size: 11px;
-    border-radius: 12px;
-    white-space: nowrap;
-  }
-
-  /* If you have multiple buttons */
-  header > div:last-child{
-    width: 100%;
-    justify-content: flex-end;
-    gap: 6px;
-  }
-
-  /* Logo slightly smaller */
-  .logo,
-  .logo-slot{
-    width: 96px;
-    height: 36px;
-    font-size: 11px;
-  }
-}/* Center support button on mobile */
-@media (max-width: 750px){
-
-  /* Right section becomes centered */
-  header > div:last-child{
-    width: 100%;
-    display: flex;
-    justify-content: center !important;
-  }
-
-  /* Slightly emphasize main CTA */
-  header .support{
-    min-width: 160px;
-    text-align: center;
-  }
-}
-@media (max-width:750px){
-  header .support{
-    position: sticky;
-    bottom: 10px;
-  }
-}
-
-
-
-
-
-
-
-footer{text-align:center;color:#9FB4CF;font-size:14px;padding:40px}
-
+    /* floating glow orbs */
+    .orb{
+      position:fixed;
+      width:420px;height:420px;
+      border-radius:999px;
+      filter: blur(70px);
+      opacity:.45;
+      z-index:-1;
+      pointer-events:none;
+      animation: drift 10s ease-in-out infinite alternate;
+    }
+    .orb.one{left:-120px;top:10vh;background:radial-gradient(circle, rgba(255,167,0,.40), transparent 60%)}
+    .orb.two{right:-140px;top:5vh;background:radial-gradient(circle, rgba(12,77,155,.45), transparent 62%); animation-duration:12s}
+    .orb.three{left:25vw;bottom:-180px;background:radial-gradient(circle, rgba(255,255,255,.18), transparent 60%); animation-duration:14s}
+    @keyframes drift{
+      from{transform:translate3d(0,0,0) scale(1)}
+      to{transform:translate3d(30px,-18px,0) scale(1.05)}
+    }
+
+    header{
+      position:fixed;top:0;left:0;right:0;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 44px;z-index:10;
+      background:linear-gradient(180deg, rgba(7,27,51,0.80), rgba(7,27,51,0));
+      backdrop-filter: blur(8px);
+    }
+    .logo-slot{
+      width:140px;height:48px;
+      border-radius:12px;
+      border:1px dashed rgba(255,255,255,0.25);
+      display:flex;align-items:center;justify-content:center;
+      color:rgba(255,255,255,0.6);
+      font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+      overflow:hidden;
+      background: rgba(255,255,255,.03);
+    }
+
+    .badge{
+      padding:8px 14px;border-radius:999px;
+      background:rgba(255,167,0,0.12);
+      color:var(--gold);
+      font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+      border:1px solid rgba(255,167,0,0.35);
+      box-shadow: 0 10px 28px rgba(255,167,0,.10);
+    }
+
+    main{
+      padding:140px 24px 70px;
+      max-width:1050px;margin:auto;
+      text-align:center;
+    }
+
+    h1{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(40px,6.8vw,72px);
+      line-height:1.05;
+      margin-bottom:18px;
+      background:linear-gradient(90deg, #FFF3C4, var(--gold), #8FC2FF);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      text-shadow: 0 25px 60px rgba(0,0,0,.35);
+    }
+    .tagline{
+      display:inline-block;
+      font-family:'Playfair Display',serif;
+      font-size:20px;
+      margin-bottom:10px;
+      color:#F7E6B5;
+      opacity:.98;
+    }
+    .subtitle{
+      max-width:820px;margin:0 auto 32px;
+      font-size:clamp(15px,2.2vw,19px);
+      color:var(--muted);
+      line-height:1.6;
+    }
+    .micro{
+      margin-top:10px;
+      font-size:12px;
+      letter-spacing:.12em;
+      color:#9FB4CF;
+      text-transform:uppercase;
+    }
+
+    /* BIG PREVIEW CTA */
+    .previewWrap{
+      margin: 30px auto 0;
+      display:flex;
+      justify-content:center;
+    }
+
+    .previewBtn{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      padding:18px 26px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.18);
+      background:
+        radial-gradient(120px 120px at 20% 20%, rgba(255,167,0,.22), transparent 60%),
+        radial-gradient(120px 120px at 80% 30%, rgba(12,77,155,.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      color:var(--text);
+      font-weight:700;
+      font-size:15px;
+      letter-spacing:.04em;
+      text-decoration:none;
+      cursor:pointer;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.34);
+      transform: translateZ(0);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      overflow:hidden;
+      min-width: min(520px, 92vw);
+    }
+
+    /* shimmering border */
+    .previewBtn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: conic-gradient(from 180deg,
+        rgba(255,167,0,.00),
+        rgba(255,167,0,.55),
+        rgba(12,77,155,.55),
+        rgba(255,255,255,.20),
+        rgba(255,167,0,.00)
+      );
+      filter: blur(16px);
+      opacity:.55;
+      animation: spin 6.5s linear infinite;
+      z-index:0;
+    }
+    @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+    /* inner content layer */
+    .previewInner{
+      position:relative;
+      z-index:1;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .previewLeft{
+      display:flex; align-items:center; gap:12px;
+      text-align:left;
+      min-width:0;
+    }
+
+    .previewIcon{
+      width:44px;height:44px;
+      border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      flex:0 0 auto;
+      animation: pop 2.6s ease-in-out infinite;
+    }
+    @keyframes pop{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-4px)}
+    }
+
+    .previewText{
+      display:flex; flex-direction:column; gap:4px;
+      min-width:0;
+    }
+    .previewTitle{
+      font-family:'Playfair Display',serif;
+      font-size:22px;
+      color:#FFF2C7;
+      line-height:1.15;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .previewSub{
+      font-size:13px;
+      color:rgba(255,255,255,.80);
+      line-height:1.35;
+    }
+
+    .previewArrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:14px;
+      background: linear-gradient(135deg, var(--gold), #FFD36B);
+      color:#3B2A00;
+      font-weight:900;
+      box-shadow: 0 14px 35px rgba(255,167,0,.25);
+      border: none;
+      flex:0 0 auto;
+      transform: translateZ(0);
+    }
+
+    .previewBtn:hover{
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 26px 80px rgba(0,0,0,.42);
+      border-color: rgba(255,167,0,.35);
+    }
+    .previewBtn:active{
+      transform: translateY(0px) scale(.99);
+      box-shadow: 0 16px 55px rgba(0,0,0,.32);
+    }
+
+    /* little “sparkles” */
+    .sparkle{
+      position:absolute;
+      width:7px;height:7px;border-radius:999px;
+      background: rgba(255,255,255,.55);
+      filter: blur(.2px);
+      opacity: .0;
+      z-index:2;
+      pointer-events:none;
+      animation: spark 2.3s ease-in-out infinite;
+    }
+    .sparkle.s1{left:18%;top:30%; animation-delay:.2s}
+    .sparkle.s2{left:50%;top:18%; animation-delay:.9s}
+    .sparkle.s3{left:72%;top:48%; animation-delay:1.4s}
+    @keyframes spark{
+      0%,100%{transform:scale(.6);opacity:0}
+      35%{transform:scale(1.2);opacity:.55}
+      60%{transform:scale(.8);opacity:.15}
+    }
+
+    /* normal CTA row */
+    .cta-row{
+      display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:18px
+    }
+    .btn{
+      padding:14px 28px;border-radius:14px;font-weight:500;
+      border:1px solid rgba(255,255,255,0.2);
+      background:rgba(255,255,255,0.06);
+      color:white;cursor:pointer;
+      transition:.3s ease;backdrop-filter: blur(8px);
+      text-decoration:none;display:inline-block
+    }
+    .btn.primary{
+      background:linear-gradient(135deg, var(--gold), #FFD36B);
+      color:#3B2A00;border:none;
+      box-shadow:0 12px 30px rgba(255,167,0,0.35)
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,0.25)}
+
+    .features{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:24px;margin-top:72px
+    }
+    .card{
+      padding:28px;border-radius:24px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border:1px solid var(--border);
+      text-align:left;
+      backdrop-filter: blur(10px);
+      opacity:0;transform:translateY(20px);
+      transition:all .8s ease
+    }
+    .card.show{opacity:1;transform:none}
+    .card h3{
+      font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px;color:#FFF2C7
+    }
+    .card p{color:var(--muted);font-size:15px;line-height:1.45}
+
+    footer{
+      text-align:center;padding:40px 24px;color:#9FB4CF;font-size:14px
+    }
+
+    /* Modals */
+    .modal{
+      position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;
+      align-items:center;justify-content:center;z-index:20
+    }
+    .modal.active{display:flex}
+    .modal-box{
+      background:#071B33;border-radius:24px;padding:32px;max-width:420px;width:90%;
+      border:1px solid rgba(255,255,255,.2);
+      box-shadow: 0 30px 90px rgba(0,0,0,.45);
+    }
+
+    @media(max-width:600px){
+      header{padding:16px 18px}
+      .logo-slot{width:120px;height:42px}
+      .previewInner{flex-direction:column; align-items:stretch}
+      .previewArrow{justify-content:center}
+      .previewTitle{white-space:normal}
+    }
   </style>
 </head>
 <body>
-<header>
-  <div class="left">
-    <div class="logo">FMPT.net</div>
-    <div class="selectors">
-      <select id="track"><option>Medicine</option><option>Pharmacy</option></select>
-      <select id="year"><option>Year 1</option><option>Year 2</option><option>Year 3</option><option>Year 4</option><option>Year 5</option><option>Year 6</option><option>Year 7</option></select>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <header>
+    <div class="logo-slot">
+      <img src="logo.png" alt="FMPT Logo" style="max-width:100%; max-height:100%; object-fit:contain;">
     </div>
-  </div>
-  <a href="/support.html" class="support">❤️ Support FMPT Hub</a>
+    <span class="badge">Coming Soon</span>
+  </header>
 
-</header>
+  <main>
+    <span class="tagline">By students, for students.</span>
+    <h1>FMPT Hub</h1>
+    <div class="micro">Faculté de Médecine et de Pharmacie de Tanger (FMPT)</div>
+    <p class="subtitle">
+      A private, elegant space built for medical students to share documents, past exams,
+      schedules, and essential resources. Mostly free. Always student-driven.
+    </p>
 
-<main>
-  <section class="stack">
+    <!-- BIG WEBSITE PREVIEW BUTTON -->
+    <div class="previewWrap">
+      <!-- Change href to your preview page (dashboard / prototype) -->
+      <a class="previewBtn" href="./dashboard.html" aria-label="Show website preview">
+        <span class="sparkle s1"></span>
+        <span class="sparkle s2"></span>
+        <span class="sparkle s3"></span>
 
-    <div class="card w-60" style="min-height: 300px;">
-        <span style="display:inline-block;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 10px;font-size:12px;color:#9FB4CF">By students, for students</span>
-        <h1 style="font-family:'Playfair Display',serif;font-size:40px;margin-bottom:8px;background:linear-gradient(90deg, #FFF3C4, var(--gold), #8FC2FF);-webkit-background-clip:text;background-clip:text;color:transparent">Hi, welcome back 👋</h1>
-        <p class="quote">“Education shouldn't exist only for those who can afford it”</p>  
-        <p style="margin-top:10px;line-height:1.5">
-  ⚠️ <strong>This platform is currently a prototype.</strong>  
-  At the moment, <b>Anatomie 1</b> is the only fully functional module and is provided as an example.
-  Development is still in progress, and many features are being improved and added.
+        <div class="previewInner">
+          <div class="previewLeft">
+            <div class="previewIcon">👀</div>
+            <div class="previewText">
+              <div class="previewTitle">SHOW WEBSITE PREVIEW</div>
+              <div class="previewSub">See the prototype dashboard (Anatomy-1 example)</div>
+            </div>
+          </div>
+          <div class="previewArrow">OPEN →</div>
+        </div>
+      </a>
+    </div>
 
-  <br><br>
+    <div class="cta-row">
+      <button class="btn primary" id="waitlistBtn">Join the Waitlist</button>
+      <a class="btn" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">Get Notified at Launch</a>
+    </div>
 
-  <span style="color:#FF6B6B;font-weight:700">
-    This is a student-made website with no official affiliation with the faculty.
-    Please verify any important announcement through official channels, as mistakes may occur.
-    — The creator of this platform
-  </span>
-</p>
-  
+    <section class="features">
+      <div class="card">
+        <h3>📚 Smart Resources</h3>
+        <p>Access organized documents, lecture notes, and past exams in one beautiful space.</p>
       </div>
+      <div class="card">
+        <h3>🗓️ Shared Schedules</h3>
+        <p>Never miss a deadline. Stay synced with your promotion and study groups.</p>
+      </div>
+      <div class="card">
+        <h3>🤝 Built by You</h3>
+        <p>Built by FMPT students — by students, for students.</p>
+      </div>
+      <div class="card">
+        <h3>🔒 Clean & Secure</h3>
+        <p>Private access. Your data, your community, your rules.</p>
+      </div>
+    </section>
+  </main>
 
-    <div class="card w-40 ann-card">
-      <h3>📣 Announcements</h3>
-<div class="ann-nav">
-  <button id="annNext">← Previous</button>
-  <button id="annPrev">Next →</button>
-</div>
-
-
-<div id="announcementsBox" class="ann-box"></div>
-
-    </div>
-
-    <div class="card w-30">
-      <h3>📝 My Note (Sticky)</h3>
-      <textarea id="myNote" placeholder="Write anything here..."
-        style="width:100%;height:300px;min-height: 200px;  border-radius:14px;padding:12px;background:rgba(255,255,255,.08);color:white;border:1px solid rgba(255,255,255,.2);resize:none;"></textarea>
-    </div>
-
-    <div class="card w-70" style="min-height: 299px;">
-      <h3>📚 Courses This Semester</h3>
-      <div class="sem-tabs" id="semTabs"></div>
-<div id="coursesBox"></div>
-
-    </div>
-
-    <div class="card w-100">
-      <h3>🗓 Weekly Calendar</h3>
-<!-- ===== Weekly Timetable Module (HTML) ===== -->
-<div class="tt-top">
-  <div class="tt-left">
-    <div class="tt-title">Weekly Timetable</div>
-    <div class="tt-sub muted">
-      <span id="ttLabel">—</span>
-      <span class="tt-dot">•</span>
-      <span id="ttRange">—</span>
-    </div>
-  </div>
-
-  <div class="tt-actions">
-    <button class="tt-nav" id="ttPrev">←</button>
-    <button class="tt-today" id="ttToday">Today</button>
-    <button class="tt-nav" id="ttNext">→</button>
-  </div>
-</div>
-
-<div class="tt-wrap">
-  <div class="tt-grid" id="ttGrid"></div>
-</div>
-    </div>
-
-    <div class="card w-50">
-      <h3>⏱ Pomodoro Timer</h3>
-<div class="pomo">
-  <div class="dial">
-    <div id="pomoTime">25:00</div>
-  </div>
-
-  <div class="pomo-controls">
-    <button class="pomo-btn" data-min="25">25</button>
-    <button class="pomo-btn" data-min="5">5</button>
-    <input id="pomoCustom" type="number" placeholder="min" />
-    <button id="pomoStart">▶ Start</button>
-    <button id="pomoStop">⏹ Stop</button>
-  </div>
-</div>
-
-<audio id="pomoSound" src="https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3"></audio>
-    </div>
-
-    <div class="card w-40">
-      <h3>5️⃣ Study Intelligence</h3>
-<div id="studySmart" class="slot-list"></div>
-    </div>
-
-    <div class="card w-60">
-      <h3>⚡ Quick Actions</h3>
-<div id="quickActions" class="slot-list"></div>
-    </div>
-
-    <div class="card w-50">
-      <h3>🎓 Clubs & Communities</h3>
-      <div id="clubsGrid"></div>
-    </div>
-
-    <div class="card w-50">
-      <h3>💛 Support the Platform</h3>
-<div id="supportCause" class="slot-list"></div>
-    </div>
-
-  </section>
-  
-</main>
-  <footer><li>© 2026 — FMPT Hub · Knowledge stays free. Support is optional.</li>
-    <a href="./about.html"
-   style="
-   margin-top: 10px;
-     display:inline-flex;align-items:center;gap:8px;
-     padding:10px 14px;border-radius:14px;
-     background:rgba(255,255,255,.08);
-     border:1px solid rgba(255,255,255,.18);
-     color:#EAF0F7;text-decoration:none;font-weight:800;
-     transition:.18s ease;
-   "
-   onmouseover="this.style.transform='translateY(-1px)';this.style.background='rgba(255,255,255,.12)'"
-   onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(255,255,255,.08)'"
->
-  ℹ️ About FMPT Hub
-</a>
-
+  <footer>
+    © 2026 — FMPT Student Hub · Mostly Free · Always Elegant
   </footer>
-  
-<script>
-(() => {
-  /* =========================
-     HELPERS
-  ========================= */
-  const $ = (id) => document.getElementById(id);
-  const safeEl = (id) => document.getElementById(id) || null;
 
-  /* =========================
-     SELECTORS (Year / Major)
-  ========================= */
-  const yearSel = $("year");
-  const trackSel = $("track");
+  <!-- WAITLIST MODAL -->
+  <div class="modal" id="waitlistModal">
+    <div class="modal-box">
+      <h3 style="font-family:Playfair Display,serif;margin-bottom:12px">Join the Waitlist</h3>
+      <p style="color:#C7D5E6;margin-bottom:16px">Leave your email and we’ll notify you when FMPT Hub launches.</p>
+      <form id="waitlistForm" action="https://formspree.io/f/xwvlzpyy" method="POST">
+        <input type="email" name="email" required placeholder="you@email.com"
+               style="width:100%;padding:12px;border-radius:10px;border:none;margin-bottom:12px" />
+        <button class="btn primary" style="width:100%">Notify Me</button>
+      </form>
+    </div>
+  </div>
 
-  function saveSel(){
-    localStorage.setItem("year", yearSel.value);
-    localStorage.setItem("track", trackSel.value);
-  }
+  <!-- THANKS MODAL -->
+  <div class="modal" id="thanksModal">
+    <div class="modal-box">
+      <h3 style="font-family:Playfair Display,serif;margin-bottom:12px">Thank you 🤍</h3>
+      <p style="color:#C7D5E6;margin-bottom:16px">You’re on the list! You’ll be notified when we launch — very soon (end of February).</p>
+      <button class="btn primary" style="width:100%" id="closeThanks">Got it</button>
+    </div>
+  </div>
 
-  function loadSel(){
-    const y = localStorage.getItem("year");
-    const t = localStorage.getItem("track");
-    if (y) yearSel.value = y;
-    if (t) trackSel.value = t;
-  }
+  <script>
+    // fade-in cards
+    const cards=document.querySelectorAll('.card');
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})
+    },{threshold:.2});
+    cards.forEach(c=>observer.observe(c));
 
-  loadSel();
+    // waitlist modal
+    const modal=document.getElementById('waitlistModal');
+    document.getElementById('waitlistBtn').onclick=()=>modal.classList.add('active');
+    modal.onclick=e=>{if(e.target===modal)modal.classList.remove('active')};
 
-  /* =========================
-     MY NOTE (localStorage)
-  ========================= */
-  const noteEl = safeEl("myNote");
-  if (noteEl) {
-    noteEl.value = localStorage.getItem("fmpt_note") || "";
-    noteEl.addEventListener("input", () => {
-      localStorage.setItem("fmpt_note", noteEl.value);
-    });
-  }
+    // form submit -> thanks
+    const form=document.getElementById('waitlistForm');
+    const thanks=document.getElementById('thanksModal');
+    const closeThanks=document.getElementById('closeThanks');
 
-  /* =========================
-     CLUBS
-  ========================= */
-  const clubsGrid = safeEl("clubsGrid");
-  const clubs = [
-    {name:"🎸 The Keytones", desc:"Music & performance club", url:"https://keytones.fmpt.net"},
-    {name:"🎙 DocsVoice", desc:"Public speaking & debates", url:"https://docsvoice.fmpt.net"},
-    {name:"🎨 Medvinci", desc:"Art & creative medicine", url:"https://medvinci.fmpt.net"},
-    {name:"🏃 MedMove", desc:"Sports & wellness", url:"https://medmove.fmpt.net"},
-    {name:"🦁 Lions Tanger Doctors", desc:"Volunteering & outreach", url:"https://lionstangerdoctors.fmpt.net"},
-    {name:"🎮 Game ON", desc:"Gaming & esports", url:"https://gameon.fmpt.net"},
-    {name:"🔬 MedScience", desc:"Research & innovation", url:"https://medscience.fmpt.net"},
-    {name:"📚 Medreads", desc:"Reading & literature", url:"https://medreads.fmpt.net"},
-    {name:"❤️ MedKhayr", desc:"Charity & humanitarian work", url:"https://medkhayr.fmpt.net"},
-    {name:"🌙 3s", desc:"Culture & student life", url:"https://3s.fmpt.net"},
-  ];
-
-  function renderClubs(){
-    if (!clubsGrid) return;
-    clubsGrid.innerHTML = "";
-    clubs.forEach(c => {
-      const div = document.createElement("div");
-      div.className = "slot-card";
-      div.innerHTML = `<div class="slot-title">${c.name}</div><div class="slot-desc">${c.desc}</div>`;
-      div.addEventListener("click", () => window.open(c.url, "_blank"));
-      clubsGrid.appendChild(div);
-    });
-  }
-
-  /* =========================
-     QUICK ACTIONS / STUDY SMART / SUPPORT
-  ========================= */
-function renderSlotList(containerId, items) {
-  const el = safeEl(containerId);
-  if (!el) return;
-  el.innerHTML = "";
-
-  items.forEach(item => {
-    const d = document.createElement("div");
-    d.className = "slot-card";
-    d.innerHTML = `
-      <div class="slot-title">${item.title}</div>
-      <div class="slot-desc">${item.desc}</div>
-    `;
-
-    // Make clickable if action exists
-    if (item.action) {
-      d.style.cursor = "pointer";
-      d.setAttribute("role", "button");
-      d.setAttribute("tabindex", "0");
-
-      const run = () => {
-  if (item.action === "share") copyShareText();
-
-  if (item.action === "donate") {
-    window.location.href = "./support.html";
-  }
-
-  if (item.action === "discord") {
-    window.open("https://discord.gg/84Jutvjk8k", "_blank");
-  }
-
-  if (typeof item.onClick === "function") item.onClick();
-};
-
-
-      d.addEventListener("click", run);
-      d.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          run();
-        }
-      });
-    }
-
-    el.appendChild(d);
-  });
-}
-
-  function renderSideModules(){
-    renderSlotList("quickActions", [
-      {title:"📌 Add Note", desc:"Quickly save a thought"},
-      {title:"⏱ Start Pomodoro", desc:"Focus for 25 minutes"},
-      {title:"📅 Plan My Week", desc:"Open your calendar"},
-    ]);
-
-    renderSlotList("studySmart", [
-      {title:"🧠 AI Study Tips", desc:"Personalized learning (soon)"},
-      {title:"📊 Weakness Analyzer", desc:"Find your weak subjects"},
-      {title:"📈 Progress Predictor", desc:"Estimate exam outcomes"},
-    ]);
-
-    renderSlotList("supportCause", [
-  {
-    title:"💖 Donate Notes",
-    desc:"Support the platform financially",
-    action:"donate"
-  },
-  {
-    title:"🤝 Volunteer",
-    desc:"Join the community on Discord",
-    action:"discord"
-  },
-  {
-    title:"📢 Spread the Word",
-    desc:"Invite friends",
-    action:"share"
-  },
-]);
-
-  }
-function showToast(msg){
-  let t = document.getElementById("toast");
-  if(!t){
-    t = document.createElement("div");
-    t.id = "toast";
-    t.style.position = "fixed";
-    t.style.left = "50%";
-    t.style.bottom = "22px";
-    t.style.transform = "translateX(-50%)";
-    t.style.padding = "10px 14px";
-    t.style.borderRadius = "14px";
-    t.style.background = "rgba(255,255,255,.12)";
-    t.style.border = "1px solid rgba(255,255,255,.18)";
-    t.style.backdropFilter = "blur(10px)";
-    t.style.color = "#EAF0F7";
-    t.style.fontWeight = "800";
-    t.style.fontSize = "12px";
-    t.style.boxShadow = "0 18px 50px rgba(0,0,0,.35)";
-    t.style.zIndex = "9999";
-    t.style.opacity = "0";
-    t.style.transition = "opacity .18s ease, transform .18s ease";
-    document.body.appendChild(t);
-  }
-  t.textContent = msg;
-  t.style.opacity = "1";
-  t.style.transform = "translateX(-50%) translateY(-2px)";
-  clearTimeout(t._hide);
-  t._hide = setTimeout(()=>{
-    t.style.opacity = "0";
-    t.style.transform = "translateX(-50%) translateY(0)";
-  }, 1400);
-}
-
-async function copyShareText(){
-  const domain = "https://fmpt.net";
-  const text =
-`FMPT Hub — by students, for students.
-A clean place for FMPT resources: documents, schedules, and past exams.
-Join here: ${domain}`;
-  try{
-    await navigator.clipboard.writeText(text);
-    showToast("Copied! Paste it anywhere ✨");
-  }catch(e){
-    // fallback
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.style.position = "fixed";
-    ta.style.left = "-9999px";
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    document.body.removeChild(ta);
-    showToast("Copied! Paste it anywhere ✨");
-  }
-}
-
-  /* =========================
-     COURSES BY YEAR + MAJOR
-  ========================= */
-  
-  /* =========================
-   COURSES (2-semester buttons per year)
-========================= */
-const semTabsEl = safeEl("semTabs");
-const coursesBox = safeEl("coursesBox");
-
-// Map Year -> [SemesterA, SemesterB]
-const yearToSems = {
-  "Year 1": ["S1", "S2"],
-  "Year 2": ["S3", "S4"],
-  "Year 3": ["S5", "S6"],
-  "Year 4": ["S7", "S8"],
-  "Year 5": ["S9", "S10"],
-  "Year 6": ["S11", "S12"],
-  "Year 7": ["S13", "S14"] // adjust if needed
-};
-
-// ===== Medicine modules by semester =====
-const medModulesBySem = {
-  S1: [
-    "Anatomie 1",
-    "Chimie biochimie",
-    "Biologie et Génétique fondamentale",
-    "Biostatistique et Santé publique",
-    "Biophysique",
-    "Méthodologie de travail universitaire"
-  ],
-  S2: [
-    "Histologie–Embryologie",
-    "Bactériologie–Virologie",
-    "Anatomie 2",
-    "Physiologie 1",
-    "Hématologie fondamentale et Immunologie fondamentale",
-    "Anglais ou une autre langue étrangère"
-  ],
-  S3: [
-    "Anatomie 3",
-    "Physiologie 2",
-    "Biochimie clinique",
-    "Fonctions vitales et Secourisme",
-    "Sémiologie 1",
-    "Art & Histoire de la médecine"
-  ],
-  S4: [
-    "Sémiologie 2",
-    "Imagerie médicale",
-    "Maladies infectieuses / Parasitologie / Mycologie",
-    "Anatomie pathologique",
-    "Pharmacologie – Toxicologie",
-    "Anglais médical"
-  ],
-  S5: [
-    "Maladies de l’Appareil Digestif",
-    "Maladies de l’Appareil Cardiovasculaire",
-    "Maladies de l’Appareil Respiratoire",
-    "Dermatologie",
-    "Endocrinologie, diabétologie et maladies métaboliques",
-    "Techniques de communication"
-  ],
-  S6: [
-    "Maladies de l’Appareil Locomoteur",
-    "Pathologie du Système nerveux",
-    "Cancérologie – Hématologie clinique",
-    "Immunopathologie clinique – Génétique médicale",
-    "Maladies de système – Gériatrie",
-    "Santé numérique et intelligence artificielle"
-  ],
-  S7: [
-    "Santé de l’enfant 1",
-    "Gynécologie – Obstétrique",
-    "Médecine préventive et prédictive",
-    "Néphrologie – Urologie",
-    "Médecine sociale, économie de la santé",
-    "Anglais médical appliqué"
-  ],
-  S8: [
-    "Urgences, réanimation, douleurs, soins palliatifs",
-    "Santé mentale",
-    "ORL – CMF – Ophtalmologie",
-    "Santé de l’enfant 2",
-    "Médecine légale, Médecine du travail, éthique",
-    "Éthique médicale, Vie professionnelle et Responsabilité sociétale de l’étudiant"
-  ],
-  S9: [
-    "Compétences cliniques médicochirurgicales 1",
-    "Compétences cliniques mère–enfant 1"
-  ],
-  S10: [
-    "Compétences cliniques médicochirurgicales 2",
-    "Compétences cliniques mère–enfant 2"
-  ],
-  S11: ["Médecine de famille"],
-  S12: ["Médecine de famille"],
-  S13: ["honestly i dont know"],
-  S14: ["honestly i dont know"]
-};
-
-// ===== Pharmacy modules by semester =====
-const pharmaModulesBySem = {
-  S1: [
-    "Biologie Cellulaire",
-    "Physique–Biophysique",
-    "Biologie Végétale",
-    "Chimie Générale / Chimie Minérale",
-    "Mathématiques / Informatique",
-    "Anglais ou une autre langue étrangère"
-  ],
-  S2: [
-    "Anatomie",
-    "Chimie Analytique I",
-    "Systématique Botanique",
-    "Initiation à la Pharmacie",
-    "Histologie / Embryologie",
-    "Méthodologie de travail universitaire"
-  ],
-  S3: [
-    "Physiologie Végétale",
-    "Physiologie Humaine",
-    "Biochimie Structurale / Biochimie Métabolique",
-    "Chimie Organique I",
-    "Chimie Analytique II",
-    "Anglais pour la pharmacie"
-  ],
-  S4: [
-    "Pharmacologie Générale",
-    "Chimie Organique II",
-    "Bases de la biotechnologie moléculaire",
-    "Chimie Analytique Instrumentale",
-    "Immunologie",
-    "Art & Histoire de la pharmacie"
-  ],
-  S5: [
-    "Sémiologie pathologique",
-    "Parasitologie – Mycologie",
-    "Bactériologie / Virologie",
-    "Essais physicochimiques et nomenclature des médicaments",
-    "Hématologie",
-    "Santé numérique et intelligence artificielle"
-  ],
-  S6: [
-    "Chimie thérapeutique I",
-    "Pharmacie Galénique I",
-    "Pharmacologie Spéciale I",
-    "Pharmacognosie I",
-    "Toxicologie I",
-    "Techniques de communication"
-  ],
-  S7: [
-    "Chimie thérapeutique II",
-    "Pharmacie Galénique II",
-    "Pharmacologie Spéciale II",
-    "Toxicologie II",
-    "Pharmacognosie II et Essais des plantes médicinales",
-    "Éthique des pratiques pharmaceutiques, vie professionnelle et responsabilité sociétale"
-  ],
-  S8: [
-    "Médecine sociale, Santé publique / Hygiène",
-    "Bromatologie – Hydrologie – Qualité",
-    "Pharmacotechnie",
-    "Biochimie Clinique",
-    "Pharmacie Hospitalière",
-    "Anglais pour la pharmacie appliquée"
-  ],
-  S9: [
-    "Pharmacie Clinique",
-    "Méthodes d’Analyse Statistiques",
-    "Toxicologie d’urgence – Secourisme",
-    "Médicament vétérinaire – Homéopathie – Phytothérapie",
-    "Droit Pharmaceutique"
-  ],
-  S10: [
-    "Cosmétologie Médicale, Dispositifs Médicaux",
-    "Pharmacie Industrielle",
-    "Biotechnologie Médicale",
-    "Nutrition diététique / compléments alimentaires",
-    "Gestion pharmaceutique, Économie de la santé"
-  ],
-  S11: ["(aucun module académique – semestre dédié aux stages)"],
-  S12: ["(aucun module académique – semestre dédié aux stages et thèse)"],
-  S13: ["hUH????????"],
-  S14: ["THERE IS NO YEAR 7 IN PHARMACY WHY ARE YOU HERE?????"]
-  
-};
-
-function modulesFor(track, semKey){
-  return (track === "Pharmacy" ? pharmaModulesBySem : medModulesBySem)[semKey] || [];
-}
-
-function semStorageKey(track, year){
-  return `fmpt_sem_${track}_${year}`;
-}
-
-function getDefaultSem(year){
-  const pair = yearToSems[year] || ["S1","S2"];
-  return pair[0];
-}
-
-function getSelectedSem(track, year){
-  const stored = localStorage.getItem(semStorageKey(track, year));
-  const allowed = yearToSems[year] || ["S1","S2"];
-  if (stored && allowed.includes(stored)) return stored;
-  return getDefaultSem(year);
-}
-
-function setSelectedSem(track, year, sem){
-  localStorage.setItem(semStorageKey(track, year), sem);
-}
-
-function renderSemButtons(track, year, activeSem){
-  if (!semTabsEl) return;
-
-  const pair = yearToSems[year] || ["S1","S2"];
-  semTabsEl.innerHTML = "";
-
-  pair.forEach(semKey => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "sem-btn" + (semKey === activeSem ? " active" : "");
-    btn.textContent = semKey;
-
-    btn.addEventListener("click", () => {
-      setSelectedSem(track, year, semKey);
-      renderCoursesWithSem(semKey);
-      renderSemButtons(track, year, semKey);
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data=new FormData(form);
+      await fetch(form.action,{method:'POST',body:data,headers:{'Accept':'application/json'}});
+      modal.classList.remove('active');
+      thanks.classList.add('active');
+      form.reset();
     });
 
-    semTabsEl.appendChild(btn);
-  });
-}
-
-function renderCoursesWithSem(semKey){
-  if (!coursesBox) return;
-
-  const track = trackSel.value;
-  const list = modulesFor(track, semKey);
-
-  coursesBox.innerHTML = "";
-  list.forEach(course => {
-    const div = document.createElement("div");
-    div.className = "course-item";
-    div.textContent = course;
-    coursesBox.appendChild(div);
-  });
-
-  syncNoteHeight();
-}
-
-function renderCourses(){
-  const track = trackSel.value;
-  const year = yearSel.value;
-
-  const activeSem = getSelectedSem(track, year);
-  renderSemButtons(track, year, activeSem);
-  renderCoursesWithSem(activeSem);
-}
-
-function slugifyCourse(name){
-  return String(name)
-    .toLowerCase()
-    .normalize("NFD")                 // remove accents
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-function renderCoursesWithSem(activeSem){
-  if (!coursesBox) return;
-
-  const track = trackSel.value; // "Medicine" or "Pharmacy"
-
-  // Pick the right dataset based on track
-  const source = (track === "Pharmacy") ? pharmaModulesBySem : medModulesBySem;
-
-  // Get modules for the selected semester (S1..S12)
-  const list = source?.[activeSem] || [];
-
-  coursesBox.innerHTML = "";
-
-  list.forEach(course => {
-    const slug = slugifyCourse(course);
-
-    const a = document.createElement("a");
-    a.className = "course-item course-link";
-    a.href = `./courses/${slug}/`;   // course page folder
-    a.textContent = course;
-    a.title = `Open ${course}`;
-
-    coursesBox.appendChild(a);
-  });
-
-  if (typeof syncNoteHeight === "function") syncNoteHeight();
-}
-
-
-  /* =========================
-     HEIGHT SYNC (Note <-> Courses)
-  ========================= */
-  function syncNoteHeight(){
-    const noteCard = document.querySelector(".card.w-30");
-    const courseCard = document.querySelector(".card.w-70");
-    if (!noteCard || !courseCard) return;
-    noteCard.style.minHeight = courseCard.offsetHeight + "px";
-  }
-  window.addEventListener("resize", syncNoteHeight);
-
-  /* =========================
-     TIMETABLE (Week navigation: 2 buttons + Today logic)
-     Requires HTML IDs:
-     ttGrid, ttLabel, ttPrev, ttToday, ttNext, ttRange
-  ========================= */
-
-const ttGrid = safeEl("ttGrid");
-const ttLabel = safeEl("ttLabel");
-const ttRange = safeEl("ttRange");
-const ttPrev = safeEl("ttPrev");
-const ttTodayBtn = safeEl("ttToday");
-const ttNext = safeEl("ttNext");
-
-const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-const SLOTS = [
-  { key:"P1",  label:"09:00 → 11:00" },
-  { key:"P2",  label:"11:00 → 13:00" },
-  { key:"TD1", label:"13:30 → 16:00" },
-  { key:"TD2", label:"16:00 → 18:30" }
-];
-
-// ---- date helpers (same idea as yours) ----
-function startOfWeek(d){
-  const date = new Date(d);
-  const day = (date.getDay()+6)%7; // Mon=0
-  date.setDate(date.getDate()-day);
-  date.setHours(0,0,0,0);
-  return date;
-}
-function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
-function fmt(d){ return d.toLocaleDateString(undefined,{month:"short",day:"numeric"}); }
-
-// ---- ISO helpers for weekStart lookup ----
-function pad2(n){ return String(n).padStart(2,"0"); }
-function toISODate(d){
-  return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
-}
-
-// ---- external JSON loading (cached) ----
-let viewDate = new Date(); // what week we are viewing (real dates)
-const calendarCache = new Map(); // key "Medicine|Year 1" -> Map(weekStartISO => weekObj)
-
-function calendarPath(track, year){
-  const t = track.toLowerCase();                 // Medicine -> medicine
-  const y = year.toLowerCase().replace(" ", ""); // Year 1 -> year1
-  // Use ./ for GitHub Pages project sites + custom domains safely
-  return `./data/calendars/${t}/${y}.json`;
-}
-
-async function getCalendarIndex(track, year){
-  const cacheKey = `${track}|${year}`;
-  if (calendarCache.has(cacheKey)) return calendarCache.get(cacheKey);
-
-  const url = calendarPath(track, year);
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Calendar JSON not found: ${url} (${res.status})`);
-
-  const data = await res.json();
-  const index = new Map();
-  (data.weeks || []).forEach(w => {
-    if (w.weekStart) index.set(w.weekStart, w);
-  });
-
-  calendarCache.set(cacheKey, index);
-  return index;
-}
-
-// ---- nav button labels (same as yours) ----
-function setNavLabels(weekStart){
-  if (!ttPrev || !ttNext) return;
-  const prev = addDays(weekStart, -7);
-  const next = addDays(weekStart,  7);
-  ttPrev.textContent = `← ${fmt(prev)}–${fmt(addDays(prev,6))}`;
-  ttNext.textContent = `${fmt(next)}–${fmt(addDays(next,6))} →`;
-}
-
-// ---- main render (reads week by real dates) ----
-async function renderTimetable(){
-  if (!ttGrid) return;
-
-  const track = trackSel.value;
-  const year  = yearSel.value;
-
-  const today = new Date();
-  const weekStart = startOfWeek(viewDate);
-  const weekEnd   = addDays(weekStart, 6);
-
-  if (ttLabel) ttLabel.textContent = `${track} · ${year}`;
-  if (ttRange) ttRange.textContent = `${fmt(weekStart)} – ${fmt(weekEnd)}`;
-  setNavLabels(weekStart);
-
-  // build grid
-  ttGrid.innerHTML = "";
-
-  const h0 = document.createElement("div");
-  h0.className = "tt-head";
-  h0.textContent = "Time";
-  ttGrid.appendChild(h0);
-
-  DAYS.forEach((d,i)=>{
-    const h = document.createElement("div");
-    h.className = "tt-head";
-    const date = addDays(weekStart,i);
-    h.textContent = `${d} · ${fmt(date)}`;
-
-    if (date.toDateString() === today.toDateString()) {
-      h.style.borderColor = "rgba(255,167,0,.55)";
-      h.style.boxShadow = "0 0 0 3px rgba(255,167,0,.12)";
-    }
-    ttGrid.appendChild(h);
-  });
-
-  // load week data from JSON
-  let weekData = null;
-  try {
-    const index = await getCalendarIndex(track, year);
-    const weekStartISO = toISODate(weekStart); // must match JSON's "weekStart"
-    weekData = index.get(weekStartISO) || null;
-  } catch (e) {
-    console.error(e);
-    // If JSON missing, just render empty rows so layout still works
-  }
-
-  // rows
-  SLOTS.forEach(slot=>{
-    const left = document.createElement("div");
-    left.className = "tt-slot";
-    left.textContent = slot.label;
-    ttGrid.appendChild(left);
-
-    DAYS.forEach((day,i)=>{
-      const cell = document.createElement("div");
-      cell.className = "tt-cell";
-
-      const date = addDays(weekStart,i);
-      if (date.toDateString() === today.toDateString()) cell.classList.add("today");
-
-      const sessions = weekData?.days?.[day]?.[slot.key] || [];
-      sessions.forEach(s=>{
-        const chip = document.createElement("div");
-        chip.className = "tt-chip";
-        const roomPart = s.room ? ` · ${s.room}` : "";
-        chip.innerHTML = `<b>${s.title}</b><span>${(s.type || "")}${roomPart}</span>`;
-        cell.appendChild(chip);
-      });
-
-      ttGrid.appendChild(cell);
-    });
-  });
-}
-
-// nav clicks move the *viewDate* by 7 days
-if (ttPrev) ttPrev.addEventListener("click", ()=>{ viewDate = addDays(viewDate, -7); renderTimetable(); });
-if (ttNext) ttNext.addEventListener("click", ()=>{ viewDate = addDays(viewDate,  7); renderTimetable(); });
-if (ttTodayBtn) ttTodayBtn.addEventListener("click", ()=>{ viewDate = new Date(); renderTimetable(); });
-
-// when selectors change, reset to today + rerender
-yearSel.addEventListener("change", ()=>{ viewDate = new Date(); renderTimetable(); });
-trackSel.addEventListener("change", ()=>{ viewDate = new Date(); renderTimetable(); });
-
-// initial render
-
-  /* =========================
-     POMODORO
-  ========================= */
-  let pomoTimer = null;
-  let pomoRemaining = 25 * 60;
-
-  const pomoTime = safeEl("pomoTime");
-  const pomoSound = safeEl("pomoSound");
-  const pomoCustom = safeEl("pomoCustom");
-
-  function updatePomo(){
-    if (!pomoTime) return;
-    const m = Math.floor(pomoRemaining / 60);
-    const s = String(pomoRemaining % 60).padStart(2, "0");
-    pomoTime.textContent = `${m}:${s}`;
-  }
-
-  function stopPomo(){
-    clearInterval(pomoTimer);
-    pomoTimer = null;
-  }
-
-  document.querySelectorAll(".pomo-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      stopPomo();
-      pomoRemaining = Number(btn.dataset.min) * 60;
-      updatePomo();
-    });
-  });
-
-  const startBtn = safeEl("pomoStart");
-  const stopBtn  = safeEl("pomoStop");
-
-  if (startBtn) {
-    startBtn.addEventListener("click", () => {
-      stopPomo();
-      pomoTimer = setInterval(() => {
-        if (pomoRemaining <= 0) {
-          stopPomo();
-          if (pomoSound) pomoSound.play();
-          return;
-        }
-        pomoRemaining--;
-        updatePomo();
-      }, 1000);
-    });
-  }
-
-  if (stopBtn) {
-    stopBtn.addEventListener("click", () => {
-      stopPomo();
-      updatePomo();
-    });
-  }
-
-  if (pomoCustom) {
-    pomoCustom.addEventListener("change", (e) => {
-      const val = Number(e.target.value);
-      if (!Number.isFinite(val) || val <= 0) return;
-      stopPomo();
-      pomoRemaining = val * 60;
-      updatePomo();
-    });
-  }
-
-/* =========================
-   ANNOUNCEMENTS (Paginated: 6 per page)
-   - Requires HTML:
-     <button id="annPrev">...</button>
-     <button id="annNext">...</button>
-     <div id="announcementsBox"></div>
-========================= */
-/* ===== Support Button Heart Burst ===== */
-
-const supportBtn = document.querySelector(".support");
-
-if(supportBtn){
-  supportBtn.addEventListener("click", (e)=>{
-
-    const rect = supportBtn.getBoundingClientRect();
-
-    for(let i=0;i<7;i++){
-      const heart = document.createElement("span");
-      heart.className = "support-heart";
-      heart.textContent = "❤️";
-
-      const x = Math.random() * rect.width;
-      const y = Math.random() * rect.height;
-
-      heart.style.left = x + "px";
-      heart.style.top  = y + "px";
-
-      supportBtn.appendChild(heart);
-
-      setTimeout(()=>heart.remove(),900);
-    }
-  });
-}
-
-const annBox  = safeEl("announcementsBox");
-const annPrev = safeEl("annPrev");
-const annNext = safeEl("annNext");
-
-let annAll = [];
-let annPage = 0;
-const ANN_PER_PAGE = 6;
-
-function annPath(track, year){
-  const t = String(track || "").toLowerCase();               // Medicine -> medicine
-  const y = String(year || "").toLowerCase().replace(" ", ""); // Year 1 -> year1
-  return `./data/announcements/${t}/${y}.json`;
-}
-
-function escapeHTML(str){
-  return String(str ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-function renderAnnPage(){
-  if (!annBox) return;
-
-  const total = annAll.length;
-
-  // clamp page in case total changed
-  const maxPage = Math.max(0, Math.ceil(total / ANN_PER_PAGE) - 1);
-  if (annPage > maxPage) annPage = maxPage;
-
-  const start = annPage * ANN_PER_PAGE;
-  const end   = Math.min(start + ANN_PER_PAGE, total);
-  const slice = annAll.slice(start, end);
-
-  annBox.innerHTML = "";
-
-  if (!slice.length){
-    annBox.innerHTML = `<div class="ann-item info">
-      <div class="ann-title">No announcements</div>
-      <div class="ann-msg">Nothing to show here.</div>
-    </div>`;
-  } else {
-    slice.forEach(a=>{
-      const type = String(a.type || "info").toLowerCase();
-
-      const badge =
-        type === "urgent" ? "🚨 Urgent" :
-        type === "exam"   ? "📝 Exam" :
-                            "ℹ️ Info";
-
-      const title = escapeHTML(a.title || "");
-      const date  = escapeHTML(a.date || "");
-      const msg   = escapeHTML(a.message || "");
-
-      const div = document.createElement("div");
-      div.className = `ann-item ${type}`;
-
-      div.innerHTML = `
-        <div class="ann-top">
-          <div class="ann-title">${title}</div>
-          <div class="ann-date">${date}</div>
-        </div>
-        <div class="ann-msg">${msg}</div>
-        <div class="ann-pill">
-          ${badge}${a.important ? " · ⭐ Important" : ""}
-        </div>
-      `;
-
-      annBox.appendChild(div);
-    });
-  }
-
-  // button states (correct + reliable)
-  if (annPrev) annPrev.disabled = (annPage === 0);
-  if (annNext) annNext.disabled = (end >= total);
-}
-
-async function loadAnnouncements(){
-  if (!annBox) return;
-
-  const track = trackSel.value;
-  const year  = yearSel.value;
-
-  const url = annPath(track, year);
-
-  try{
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) throw new Error(`No announcements file: ${url}`);
-
-    const data = await res.json();
-    const today = new Date().toISOString().slice(0,10);
-
-    annAll = (data.announcements || [])
-      // keep unexpired
-      .filter(a => !a.expires || String(a.expires) >= today)
-      // newest first
-      .sort((a,b) => String(b.date||"").localeCompare(String(a.date||"")));
-
-  }catch(e){
-    console.warn(e);
-    annAll = [];
-  }
-
-  annPage = 0;
-  renderAnnPage();
-}
-
-// nav
-if (annPrev){
-  annPrev.addEventListener("click", ()=>{
-    if (annPage > 0){
-      annPage--;
-      renderAnnPage();
-    }
-  });
-}
-if (annNext){
-  annNext.addEventListener("click", ()=>{
-    const total = annAll.length;
-    if ((annPage + 1) * ANN_PER_PAGE < total){
-      annPage++;
-      renderAnnPage();
-    }
-  });
-}
-
-/* Hook into your existing init system:
-   - Keep your refreshAll() as-is
-   - Keep your existing year/track listeners
-   - Just make sure loadAnnouncements() is called on change + on init
-*/
-yearSel.addEventListener("change", loadAnnouncements);
-trackSel.addEventListener("change", loadAnnouncements);
-
-// Call once during init (you already do this at the end)
-loadAnnouncements();
-
-
-
-  /* =========================
-     INIT
-  ========================= */
-  function refreshAll(){
-    renderCourses();
-    renderTimetable();
-    syncNoteHeight();
-  }
-
-  yearSel.addEventListener("change", () => { saveSel(); refreshAll(); });
-  trackSel.addEventListener("change", () => { saveSel(); refreshAll(); });
-  yearSel.addEventListener("change", loadAnnouncements);
-trackSel.addEventListener("change", loadAnnouncements);
-
-  renderClubs();
-  renderSideModules();
-  refreshAll();
-  updatePomo();
-  loadAnnouncements();
-})();
-</script>
-
-
+    thanks.onclick=e=>{if(e.target===thanks)thanks.classList.remove('active')};
+    closeThanks.onclick=()=>thanks.classList.remove('active');
+  </script>
 </body>
 </html>
