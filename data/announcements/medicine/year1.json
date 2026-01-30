@@ -1,0 +1,70 @@
+{
+  "announcements": [
+    {
+      "id": 1,
+      "title": "Anatomie 1 — Course Schedule Updated",
+      "message": "The lecture on Thorax has been moved to Wednesday at 11:00 in Amphi B. Please update your notes accordingly.",
+      "date": "2026-01-20",
+      "type": "info",
+      "important": true
+    },
+    {
+      "id": 2,
+      "title": "Biostatistique Quiz",
+      "message": "A short quiz will take place this Friday during the second period. Topics: Descriptive statistics and probability.",
+      "date": "2026-01-18",
+      "type": "exam",
+      "important": false
+    },
+    {
+      "id": 3,
+      "title": "Urgent — Room Change",
+      "message": "Today’s Chimie Biochimie lecture will be held in Amphi C instead of Amphi A due to maintenance.",
+      "date": "2026-01-15",
+      "type": "urgent",
+      "important": true,
+      "expires": "2026-01-25"
+    },
+    {
+      "id": 4,
+      "title": "TD Groups List Published",
+      "message": "The updated TD group assignments are now available on the notice board and will be uploaded soon to FMPT Hub.",
+      "date": "2026-01-12",
+      "type": "info",
+      "important": false
+    },
+    {
+      "id": 5,
+      "title": "Exam Registration Reminder",
+      "message": "Please complete your online exam registration before January 30th. Late submissions will not be accepted.",
+      "date": "2026-01-10",
+      "type": "exam",
+      "important": true
+    },
+    {
+      "id": 6,
+      "title": "Library Opening Hours",
+      "message": "During exam season, the faculty library will remain open until 22:00 from Monday to Saturday.",
+      "date": "2026-01-07",
+      "type": "info",
+      "important": false
+    },
+    {
+      "id": 7,
+      "title": "Winter Break Announcement",
+      "message": "Classes will be suspended from February 1st to February 8th. Enjoy your break and revise well!",
+      "date": "2026-01-05",
+      "type": "info",
+      "important": false,
+      "expires": "2026-02-09"
+    },
+    {
+      "id": 8,
+      "title": "Rattrapage Exam — Anatomy",
+      "message": "The anatomy rattrapage exam is scheduled for February 3rd at 09:00 in Amphi A.",
+      "date": "2026-01-03",
+      "type": "exam",
+      "important": true
+    }
+  ]
+}
