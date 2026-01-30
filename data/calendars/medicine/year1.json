@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "track": "Medicine",
+    "year": "Year 1"
+  },
+  "weeks": [
+    {
+      "weekStart": "2026-02-09",
+      "days": {
+        "Wed": {
+          "P1": [
+            {
+              "title": "Biologie et Genetique",
+              "type": "EXAM",
+              "room": null
+            }
+          ]
+        },
+        "Fri": {
+          "P1": [
+            {
+              "title": "Chimie Biochimie",
+              "type": "EXAM",
+              "room": null
+            }
+          ]
+        }
+      }
+    },
+     {
+      "weekStart": "2026-02-16",
+      "days": {
+        "Tue": {
+          "P1": [
+            {
+              "title": "Biophysique",
+              "type": "EXAM",
+              "room": null
+            }
+          ]
+        },
+        "Wed": {
+          "P1": [
+            {
+              "title": "Physiologie I",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ],
+          "P2": [
+            {
+              "title": "Histologie / Embryologie I",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ]
+        },
+        "Thu": {
+          "P1": [
+            {
+              "title": "Hématologie - Immunologie",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ],
+          "P2": [
+            {
+              "title": "Bactériologie / Virologie / Immunologie",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ]
+        },
+        "Fri": {
+          "P1": [
+            {
+              "title": "Anatomie II",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ],
+          "P2": [
+            {
+              "title": "Hématologie - Immunologie",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "weekStart": "2026-02-23",
+      "days": {
+        "Mon": {
+          "P1": [
+            {
+              "title": "Anatomie II",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ],
+          "P2": [
+            {
+              "title": "Bactériologie / Virologie / Immunologie",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ]
+        },
+        "Tue": {
+          "P1": [
+            {
+              "title": "Physiologie I",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ],
+          "P2": [
+            {
+              "title": "Histologie / Embryologie I",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ]
+        },
+        "Wed": {
+          "P1": [
+            {
+              "title": "Physiologie I",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ],
+          "P2": [
+            {
+              "title": "Histologie / Embryologie I",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ]
+        },
+        "Thu": {
+          "P1": [
+            {
+              "title": "Hématologie - Immunologie",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ],
+          "P2": [
+            {
+              "title": "Bactériologie / Virologie / Immunologie",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ]
+        },
+        "Fri": {
+          "P1": [
+            {
+              "title": "Anatomie II",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ],
+          "P2": [
+            {
+              "title": "Hématologie - Immunologie",
+              "type": "CM",
+              "room": "Amphi 2"
+            }
+          ]
+        }
+      }
+    }
+  ]
+  
+}
