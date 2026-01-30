@@ -1,0 +1,399 @@
+<!-- support.html — FMPT Hub Support Page (static, GitHub Pages friendly) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Support FMPT Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold:#FFA700;--blue:#0C4D9B;--deep:#071B33;
+      --glass:rgba(255,255,255,.08);--border:rgba(255,255,255,.18);
+      --text:#EAF0F7;--muted:#C7D5E6;--danger:#FF6B6B;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(255,167,0,.15), transparent 40%),
+        radial-gradient(800px 600px at 90% 10%, rgba(12,77,155,.25), transparent 45%),
+        linear-gradient(180deg, #050E1B, #071B33 60%, #050E1B);
+      overflow-x:hidden;
+    }
+
+    /* Subtle floating hearts (few, soft) */
+    .heart{
+      position:fixed;
+      bottom:-40px;
+      font-size:18px;
+      opacity:.18;
+      filter: blur(.2px);
+      animation: floatHeart 10s linear infinite;
+      pointer-events:none;
+      z-index:0;
+    }
+    @keyframes floatHeart{
+      from{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
+      10%{ opacity:.20; }
+      60%{ opacity:.18; }
+      to{ transform: translateY(-120vh) translateX(60px) rotate(18deg); opacity:0; }
+    }
+
+    header{
+      position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:16px 22px;
+      background:linear-gradient(180deg, rgba(7,27,51,.75), rgba(7,27,51,.35));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .left{display:flex;align-items:center;gap:12px}
+    .logo{width:120px;height:42px;border-radius:10px;border:1px dashed rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55);font-size:12px}
+    .brand{display:flex;flex-direction:column;gap:2px;line-height:1.1}
+    .brand .kicker{font-size:12px;color:rgba(255,255,255,.75)}
+    .brand .title{font-family:"Playfair Display",serif;font-size:18px;color:#FFF2C7}
+
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:14px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.18);
+      color:var(--text); text-decoration:none;
+      font-weight:700; transition:.18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
+    .btn.primary{
+      background:linear-gradient(135deg, var(--gold), #FFD36B);
+      color:#3B2A00; border:none;
+    }
+
+    main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:30px 18px 70px}
+    .stack{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:22px;
+      max-width:100%;
+      min-width:0;
+    }
+    .w-60{flex:1 1 60%}
+    .w-40{flex:1 1 38%}
+    .w-50{flex:1 1 48%}
+    .w-100{flex:1 1 100%}
+
+    @media (max-width: 850px){
+      header{flex-wrap:wrap;padding:12px 14px}
+      header .left{width:100%;justify-content:space-between}
+      header .right{width:100%;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+      .logo{width:96px;height:36px}
+      .w-60,.w-40,.w-50,.w-100{flex:1 1 100%}
+    }
+
+    h1{
+      font-family:"Playfair Display",serif;
+      font-size:44px;
+      color:#FFF2C7;
+      letter-spacing:.3px;
+    }
+    h3{
+      font-family:"Playfair Display",serif;
+      font-size:22px;
+      margin-bottom:10px;
+      color:#FFF2C7;
+    }
+    p{line-height:1.6}
+    .muted{color:var(--muted)}
+    .pillRow{margin-top:12px;display:flex;flex-wrap:wrap;gap:10px}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      font-size:12px;color:rgba(255,255,255,.88);
+      white-space:nowrap;
+    }
+
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:850px){ .grid2{grid-template-columns:1fr} }
+
+    .supportBtn{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:14px 14px;border-radius:18px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      transition:.18s ease;
+    }
+    .supportBtn:hover{
+      background:rgba(255,167,0,.14);
+      border-color:rgba(255,167,0,.45);
+      transform:translateY(-1px);
+    }
+    .supportBtn b{display:block}
+    .supportBtn small{opacity:.78}
+
+    .dangerBox{
+      margin-top:12px;
+      border:1px solid rgba(255,107,107,.35);
+      background:rgba(255,107,107,.10);
+      border-radius:18px;
+      padding:14px;
+      color:#ffd1d1;
+    }
+
+    /* Goal meter */
+    .meter{
+      margin-top:12px;
+      padding:12px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.18);
+    }
+    .bar{
+      height:12px;border-radius:999px;
+      background:rgba(255,255,255,.10);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .fill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(255,167,0,.95), rgba(12,77,155,.85));
+      transition: width .5s ease;
+    }
+    .meterRow{
+      margin-top:10px;
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      font-size:12px;color:rgba(255,255,255,.85)
+    }
+
+    footer{
+      max-width:1100px;margin:0 auto;
+      padding:18px 18px 30px;
+      color:rgba(255,255,255,.65);
+      border-top:1px solid rgba(255,255,255,.08);
+      position:relative;z-index:1;
+    }
+    .footerRow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+    .footerRow a{color:rgba(255,255,255,.75);text-decoration:none}
+    .footerRow a:hover{color:#fff}
+  </style>
+</head>
+
+<body>
+  <!-- subtle hearts (not too many) -->
+  <span class="heart" style="left:10%; animation-duration:12s;">💛</span>
+  <span class="heart" style="left:28%; animation-duration:10s; font-size:16px;">💙</span>
+  <span class="heart" style="left:52%; animation-duration:14s;">💛</span>
+  <span class="heart" style="left:74%; animation-duration:11s; font-size:15px;">💙</span>
+  <span class="heart" style="left:88%; animation-duration:13s;">💛</span>
+
+  <header>
+    <div class="left">
+      <div class="logo">FMPT.net</div>
+      <div class="brand">
+        <div class="kicker">FMPT Hub</div>
+        <div class="title">Support the platform</div>
+      </div>
+    </div>
+
+    <div class="right" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <a class="btn" href="./index.html">← Dashboard</a>
+      <a class="btn primary" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">💬 Discord</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="stack">
+
+      <div class="card w-60">
+        <h1>❤️ Support FMPT Hub</h1>
+        <p class="muted" style="margin-top:10px">
+          FMPT Hub is built by students, for students. I’m currently paying the costs out of my own pocket so the platform
+          stays accessible and mostly free. If it helps you, even a small contribution keeps it alive and helps us grow.
+        </p>
+
+        <div class="pillRow">
+          <span class="pill">📌 By students, for students</span>
+          <span class="pill">✨ Mostly free</span>
+          <span class="pill">🔒 No paywall on courses</span>
+        </div>
+
+        <div class="meter" id="meter">
+          <div class="muted" style="font-weight:700;margin-bottom:8px">Monthly support goal</div>
+          <div class="bar"><div class="fill" id="goalFill"></div></div>
+          <div class="meterRow">
+            <span><b id="curMAD">0</b> MAD raised</span>
+            <span>Goal: <b id="goalMAD">500</b> MAD / month</span>
+          </div>
+          <div class="muted" style="font-size:12px;margin-top:8px">
+            If we reach the goal, we can cover basic running costs + keep adding resources smoothly.
+          </div>
+        </div>
+
+        <div class="dangerBox">
+          <b style="color:#ffe2e2">Important:</b>
+          This is a student-made website with no official affiliation with the faculty.
+          Please verify important announcements via official channels. — The creator
+        </div>
+      </div>
+
+      <div class="card w-40">
+        <h3>💸 What your support pays for</h3>
+        <p class="muted">
+          Keep this honest and flexible. You can update these estimates anytime.
+        </p>
+
+        <div class="pillRow" style="margin-top:14px">
+          <span class="pill">🌐 Domain (yearly)</span>
+          <span class="pill">🗄 Storage / backups</span>
+          <span class="pill">🧰 Dev tools</span>
+          <span class="pill">🛠 Maintenance</span>
+        </div>
+
+      </div>
+
+      <div class="card w-50">
+        <h3>☕ Support online</h3>
+        <div class="grid2">
+          <!-- Replace these links with your real donation links -->
+          <a class="supportBtn" href="https://ko-fi.com/fmptstudent" target="_blank" rel="noopener">
+            <div>
+              <b>Ko-fi</b>
+              <small>support via Ko-fi</small>
+            </div>
+            <div>→</div>
+          </a>
+          <a class="supportBtn" href="https://paypal.me/fmptstudent" target="_blank" rel="noopener">
+            <div>
+              <b>PayPal</b>
+              <small>support via paypal</small>
+            </div>
+            <div>→</div>
+          </a>
+        </div>
+
+        <div class="pillRow" style="margin-top:14px">
+          <span class="pill">20 MAD</span>
+          <span class="pill">50 MAD</span>
+          <span class="pill">100 MAD</span>
+          <span class="pill">Any amount helps</span>
+        </div>
+      </div>
+
+      <div class="card w-50">
+        <h3>💵 Support on campus (cash)</h3>
+        <p class="muted">
+          Prefer cash? Totally fine. We can organize a simple “support box” or support days at school.
+          Even 10 MAD would Help immensely
+        </p>
+        <div class="grid2" style="margin-top:12px">
+          <div class="supportBtn" style="cursor:default">
+            <div>
+              <b>Support box</b>
+              <small>Library</small>
+            </div>
+            <div>📦</div>
+          </div>
+          <div class="supportBtn" style="cursor:default">
+            <div>
+              <b>Support days</b>
+              <small>Once per semester, optional</small>
+            </div>
+            <div>🗓</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-100">
+        <h3>🤝 Support without money</h3>
+        <p class="muted">
+          If you can’t donate, you can still support the platform by sharing PDFs, past exams, notes, corrections, or reporting broken links.
+          That contribution is just as important.
+        </p>
+
+        <div class="grid2" style="margin-top:12px">
+          <a class="supportBtn" href="mailto:FMPTSTUDENT@gmail.com?subject=%5BFMPT%20Hub%5D%20Files%20Contribution&body=Hi!%0A%0AI%20want%20to%20share%20files%20for%3A%0A-%20Course%2FModule%3A%0A-%20Year%20%26%20Track%3A%0A%0AI%20will%20attach%20the%20files%20to%20this%20email.%0A" target="_blank" rel="noopener">
+            <div>
+              <b>📎 Share files by email</b>
+              <small>FMPTSTUDENT@gmail.com</small>
+            </div>
+            <div>→</div>
+          </a>
+          <a class="supportBtn" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">
+            <div>
+              <b>💬 Share via Discord</b>
+              <small>Fastest way to contribute</small>
+            </div>
+            <div>→</div>
+          </a>
+        </div>
+
+        <div class="pillRow" style="margin-top:14px">
+          <span class="pill">📚 Notes</span>
+          <span class="pill">🧾 Past exams</span>
+          <span class="pill">✅ Corrections</span>
+          <span class="pill">Announcements for your promo</span>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <div class="footerRow">
+      <div>© <span id="yearNow"></span> FMPT Hub</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="./index.html">Dashboard</a>
+        <a href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">Discord</a>
+        <a href="mailto:FMPTSTUDENT@gmail.com">Contact</a>
+      </div>
+    </div>
+        <a href="./about.html"
+   style="
+   margin-top: 10px;
+     display:inline-flex;align-items:center;gap:8px;
+     padding:10px 14px;border-radius:14px;
+     background:rgba(255,255,255,.08);
+     border:1px solid rgba(255,255,255,.18);
+     color:#EAF0F7;text-decoration:none;font-weight:800;
+     transition:.18s ease;
+   "
+   onmouseover="this.style.transform='translateY(-1px)';this.style.background='rgba(255,255,255,.12)'"
+   onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(255,255,255,.08)'"
+>
+  ℹ️ About FMPT Hub
+</a>
+  </footer>
+
+  <script>
+    document.getElementById("yearNow").textContent = new Date().getFullYear();
+
+    // Manual goal values (edit these anytime)
+    const goalMAD = 500;     // monthly goal
+    const currentMAD = 10;  // update manually when you want (or later from a JSON)
+
+    const goalEl = document.getElementById("goalMAD");
+    const curEl  = document.getElementById("curMAD");
+    const fill   = document.getElementById("goalFill");
+
+    goalEl.textContent = goalMAD;
+    curEl.textContent  = currentMAD;
+
+    const pct = Math.max(0, Math.min(100, (currentMAD / goalMAD) * 100));
+    fill.style.width = pct + "%";
+  </script>
+</body>
+</html>

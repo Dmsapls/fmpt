@@ -1,0 +1,439 @@
+<!-- =========================
+     FMPT Hub — 404.html
+     Put this file at your site root (same level as index.html)
+     GitHub Pages will serve it automatically for missing pages.
+========================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>404 — Page Not Found · FMPT Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold:#FFA700;--blue:#0C4D9B;--deep:#071B33;
+      --glass:rgba(255,255,255,.08);--border:rgba(255,255,255,.18);
+      --text:#EAF0F7;--muted:#C7D5E6;--danger:#FF6B6B;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(255,167,0,.15), transparent 40%),
+        radial-gradient(800px 600px at 90% 10%, rgba(12,77,155,.25), transparent 45%),
+        linear-gradient(180deg, #050E1B, #071B33 60%, #050E1B);
+      overflow-x:hidden;
+    }
+
+    /* Floating particles */
+    .particle{
+      position:fixed; inset:auto;
+      width:10px; height:10px; border-radius:50%;
+      background:rgba(255,255,255,.08);
+      filter: blur(.2px);
+      animation: floatUp 10s linear infinite;
+      pointer-events:none;
+      z-index:0;
+    }
+    @keyframes floatUp{
+      from{transform:translateY(30px); opacity:.0}
+      10%{opacity:.6}
+      to{transform:translateY(-120vh); opacity:0}
+    }
+
+    header{
+      position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 22px;
+      background:linear-gradient(180deg, rgba(7,27,51,.75), rgba(7,27,51,.35));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .left{display:flex; align-items:center; gap:12px}
+    .logo-slot{
+      width:120px; height:42px; border-radius:10px;
+      border:1px dashed rgba(255,255,255,.25);
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.55); font-size:12px;
+    }
+    .brand{
+      display:flex; flex-direction:column; line-height:1.1;
+    }
+    .brand .kicker{font-size:12px; color:rgba(255,255,255,.75)}
+    .brand .name{font-family:"Playfair Display",serif; font-size:18px; color:#FFF2C7}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.18);
+      color:var(--text);
+      text-decoration:none;
+      font-weight:700;
+      transition:.18s ease;
+    }
+    .btn:hover{background:rgba(255,255,255,.12); transform:translateY(-1px)}
+    .btn.primary{
+      background:linear-gradient(135deg, var(--gold), #FFD36B);
+      color:#3B2A00; border:none;
+    }
+
+    main{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:0 auto;
+      padding:34px 18px 70px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+      align-items:flex-start;
+    }
+
+    /* Modular glass cards (unbalanced, no strict grid) */
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .w-60{flex:1 1 60%}
+    .w-40{flex:1 1 38%}
+    .w-50{flex:1 1 48%}
+    .w-30{flex:1 1 30%}
+    .w-70{flex:1 1 68%}
+    @media (max-width: 900px){
+      .w-60,.w-40,.w-50,.w-30,.w-70{flex:1 1 100%}
+      header{padding:14px 16px}
+      .logo-slot{width:96px}
+    }
+
+    .title{
+      font-family:"Playfair Display",serif;
+      font-size:46px;
+      letter-spacing:.5px;
+      color:#FFF2C7;
+    }
+    .subtitle{
+      margin-top:10px;
+      color:rgba(255,255,255,.85);
+      line-height:1.55;
+    }
+    .muted{color:var(--muted)}
+    .danger{
+      margin-top:14px;
+      color:var(--danger);
+      font-weight:800;
+      line-height:1.5;
+    }
+
+    /* Big 404 blob */
+    .hero{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .code{
+      font-size:78px;
+      font-weight:900;
+      letter-spacing:2px;
+      background:linear-gradient(135deg, rgba(255,167,0,.95), rgba(12,77,155,.95));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,.35));
+      animation: glow 2.2s ease-in-out infinite;
+    }
+    @keyframes glow{
+      0%,100%{filter: drop-shadow(0 10px 24px rgba(0,0,0,.35))}
+      50%{filter: drop-shadow(0 18px 36px rgba(255,167,0,.16))}
+    }
+    .orb{
+      width:120px; height:120px; border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.18), transparent 45%),
+        radial-gradient(circle at 70% 70%, rgba(255,167,0,.22), transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(12,77,155,.25), transparent 55%),
+        rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      animation: drift 3.6s ease-in-out infinite;
+      flex:0 0 auto;
+    }
+    @keyframes drift{
+      0%,100%{transform:translateY(0) rotate(-1deg)}
+      50%{transform:translateY(-10px) rotate(2deg)}
+    }
+
+    /* Fun little “scanner” line */
+    .scan{
+      position:absolute;
+      left:-20%;
+      top:0;
+      width:140%;
+      height:2px;
+      background:linear-gradient(90deg, transparent, rgba(255,167,0,.55), transparent);
+      animation: scan 6.8s linear infinite;
+      opacity:.7;
+    }
+@keyframes scan{
+  0%{
+    transform: translateY(10px);
+    opacity: 0.4;
+  }
+
+  50%{
+    transform: translateY(500px);
+    opacity: 0.9;
+  }
+
+  100%{
+    transform: translateY(10px);
+    opacity: 0.4;
+  }
+}
+
+    /* Pills + info list */
+    .pills{margin-top:12px; display:flex; flex-wrap:wrap; gap:10px}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      color:rgba(255,255,255,.88);
+      white-space:nowrap;
+    }
+
+    .list{margin-top:12px; display:flex; flex-direction:column; gap:10px}
+    .link{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      transition:.18s ease;
+    }
+    .link:hover{
+      background:rgba(255,167,0,.14);
+      border-color:rgba(255,167,0,.45);
+      transform:translateX(2px);
+    }
+    .link small{opacity:.75}
+
+    /* Tiny “you are here” box */
+    .path{
+      margin-top:12px;
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.18);
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px;
+      color:rgba(255,255,255,.85);
+      word-break:break-all;
+    }
+
+    footer{
+      max-width:1100px;
+      margin:0 auto;
+      padding:18px 18px 30px;
+      color:rgba(255,255,255,.65);
+      border-top:1px solid rgba(255,255,255,.08);
+      position:relative;
+      z-index:1;
+    }
+    .footer-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+    .footer-row a{color:rgba(255,255,255,.75);text-decoration:none}
+    .footer-row a:hover{color:#fff}
+
+    /* subtle entry animations */
+    .fade-in{opacity:0; transform:translateY(10px); animation: fadeIn .55s ease forwards}
+    .delay-1{animation-delay:.06s}
+    .delay-2{animation-delay:.12s}
+    .delay-3{animation-delay:.18s}
+    .delay-4{animation-delay:.24s}
+    @keyframes fadeIn{to{opacity:1; transform:translateY(0)}}
+  </style>
+</head>
+
+<body>
+  <!-- particles -->
+  <span class="particle" style="left:8%; bottom:-40px; animation-duration:12s; width:8px;height:8px"></span>
+  <span class="particle" style="left:22%; bottom:-50px; animation-duration:10s; width:6px;height:6px"></span>
+  <span class="particle" style="left:38%; bottom:-55px; animation-duration:14s; width:10px;height:10px"></span>
+  <span class="particle" style="left:55%; bottom:-60px; animation-duration:11s; width:7px;height:7px"></span>
+  <span class="particle" style="left:71%; bottom:-48px; animation-duration:13s; width:9px;height:9px"></span>
+  <span class="particle" style="left:87%; bottom:-42px; animation-duration:9s; width:6px;height:6px"></span>
+
+  <header>
+    <div class="left">
+      <div class="logo-slot">FMPT.net</div>
+      <div class="brand">
+        <div class="kicker">FMPT Hub</div>
+        <div class="name">Not Found</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <a class="btn" href="./">← Dashboard</a>
+      <a class="btn primary" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">💬 Discord</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="card w-60 fade-in delay-1">
+      <div class="scan"></div>
+      <div class="hero">
+        <div>
+          <div class="code">404</div>
+          <div class="title">This page isn’t here… yet.</div>
+        </div>
+        <div class="orb" aria-hidden="true"></div>
+      </div>
+
+      <p class="subtitle">
+        Either the link you clicked doesn’t exist, or this page is still under construction.
+        FMPT Hub is launching step-by-step, so missing files/pages are expected for now.
+      </p>
+
+      <div class="pills">
+        <span class="pill">🏗️ Under construction</span>
+        <span class="pill">🧭 Wrong link</span>
+        <span class="pill">🗂️ Missing file</span>
+        <span class="pill">✨ We’re building fast</span>
+      </div>
+
+      <div class="path" id="pathBox">/</div>
+
+      <p class="danger">
+        This is a student-made website with no official affiliation with the faculty.
+        Please verify any important announcement through official channels, as mistakes may occur.
+        — The creator of this platform
+      </p>
+    </section>
+
+    <section class="card w-40 fade-in delay-2">
+      <h3>🧠 Quick fixes</h3>
+      <div class="list">
+        <a class="link" href="./">
+          <span>🏠 Go back to dashboard</span>
+          <small>Home</small>
+        </a>
+        <a class="link" href="./courses/anatomie-1/">
+          <span>📘 Open the example module: Anatomie 1</span>
+          <small>Works</small>
+        </a>
+        <a class="link" href="javascript:history.back()">
+          <span>↩️ Go back</span>
+          <small>Browser</small>
+        </a>
+      </div>
+
+      <div style="margin-top:14px" class="pill">Tip: check your spelling and try again.</div>
+    </section>
+
+    <section class="card w-70 fade-in delay-3">
+      <h3>📩 Help us complete this page</h3>
+      <p class="muted" style="line-height:1.55">
+        If you have files related to this subject (course PDFs, TD/TP sheets, past exams, corrections, notes),
+        you can help a lot. Send what you have and we’ll organize it cleanly for everyone.
+      </p>
+
+      <div class="list">
+        <a class="link" id="mailLink" href="mailto:FMPTSTUDENT@gmail.com">
+          <span>📎 Share files via email</span>
+          <small>FMPTSTUDENT@gmail.com</small>
+        </a>
+        <a class="link" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">
+          <span>💬 Or message us on Discord</span>
+          <small>Join</small>
+        </a>
+      </div>
+
+      <div class="pills" style="margin-top:14px">
+        <span class="pill">🤝 Community-first</span>
+        <span class="pill">📚 Mostly free</span>
+        <span class="pill">🧩 Modular pages</span>
+      </div>
+    </section>
+
+    <section class="card w-30 fade-in delay-4">
+      <h3>🎲 Random tip</h3>
+      <p class="muted" id="tipText" style="line-height:1.55;margin-top:6px">
+        Loading…
+      </p>
+      <div class="pills" style="margin-top:12px">
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-row">
+      <div>© <span id="yearNow"></span> FMPT Hub</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="./">Dashboard</a>
+        <a href="./courses/anatomie-1/">Anatomie 1</a>
+        <a href="mailto:FMPTSTUDENT@gmail.com">Contact</a>
+      </div>
+    </div>
+        <a href="./about.html"
+   style="
+   margin-top: 10px;
+     display:inline-flex;align-items:center;gap:8px;
+     padding:10px 14px;border-radius:14px;
+     background:rgba(255,255,255,.08);
+     border:1px solid rgba(255,255,255,.18);
+     color:#EAF0F7;text-decoration:none;font-weight:800;
+     transition:.18s ease;
+   "
+   onmouseover="this.style.transform='translateY(-1px)';this.style.background='rgba(255,255,255,.12)'"
+   onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(255,255,255,.08)'"
+>
+  ℹ️ About FMPT Hub
+</a>
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById("yearNow").textContent = new Date().getFullYear();
+
+    // Show the path the user tried to visit
+    const pathBox = document.getElementById("pathBox");
+    if (pathBox) pathBox.textContent = window.location.pathname || "/";
+
+    // Dynamic email subject line (so you know what they're sharing for)
+    const mailLink = document.getElementById("mailLink");
+    if (mailLink) {
+      const p = window.location.pathname || "/";
+      const subject = encodeURIComponent(`[FMPT Hub Files] Missing page: ${p}`);
+      const body = encodeURIComponent(
+        `Hi!\n\nI have files that could help for:\n${p}\n\nFiles/notes:\n- \n\n(You can attach PDFs/photos here)\n`
+      );
+      mailLink.href = `mailto:FMPTSTUDENT@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    // Random helpful tips (dynamic feel)
+    const tips = [
+      "If you’re looking for a PDF, it might not be uploaded yet — try the Discord and ask your classmates.",
+      "Check the course list on the dashboard and start from the semester modules — it’s the most complete path.",
+      "If a link is broken, screenshots or photos of the document are still useful — send whatever you have.",
+      "Pro tip: Name your PDFs like 01-intro.pdf, 02-thorax.pdf… it keeps everything clean and searchable."
+    ];
+    const tipText = document.getElementById("tipText");
+    if (tipText) tipText.textContent = tips[Math.floor(Math.random() * tips.length)];
+  </script>
+</body>
+</html>

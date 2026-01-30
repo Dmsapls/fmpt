@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FMPT Hub — About</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold:#FFA700;
+      --blue:#0C4D9B;
+      --deep:#071B33;
+      --night:#050E1B;
+      --text:#EAF0F7;
+      --muted:#C7D5E6;
+
+      --glass: rgba(255,255,255,.10);
+      --glass2: rgba(255,255,255,.06);
+      --border: rgba(255,255,255,.18);
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --glow: 0 0 40px rgba(255,167,0,.18);
+
+      --danger: #ff6b6b;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(255,167,0,0.18), transparent 45%),
+        radial-gradient(800px 600px at 90% 10%, rgba(12,77,155,0.28), transparent 45%),
+        linear-gradient(180deg, var(--night), var(--deep) 60%, var(--night));
+      background-attachment: fixed;
+      overflow-x:hidden;
+      min-height: 100vh;
+    }
+
+    /* Smooth animated overlay that stays perfect while scrolling */
+    .bg-sheen{
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,167,0,.16), transparent 45%),
+        radial-gradient(circle at 70% 20%, rgba(12,77,155,.22), transparent 50%),
+        radial-gradient(circle at 60% 70%, rgba(255,255,255,.06), transparent 55%);
+      filter: blur(42px);
+      opacity: .95;
+      animation: drift 14s ease-in-out infinite alternate;
+      z-index: 0;
+      pointer-events:none;
+    }
+    @keyframes drift{
+      from{ transform: translate3d(-2%, -2%, 0) scale(1.02); }
+      to  { transform: translate3d(2%, 2%, 0) scale(1.05); }
+    }
+
+    /* Subtle floating particles */
+    .particle{
+      position: fixed;
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--glow);
+      filter: blur(.2px);
+      animation: floatUp 11s linear infinite;
+      z-index: 0;
+      pointer-events:none;
+    }
+    @keyframes floatUp{
+      from{ transform: translateY(10vh) translateX(0) scale(.9); opacity: 0; }
+      10%{ opacity: .35; }
+      70%{ opacity: .22; }
+      to{ transform: translateY(-120vh) translateX(50px) scale(1.15); opacity: 0; }
+    }
+
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 16px 22px;
+      background: linear-gradient(180deg, rgba(7,27,51,.80), rgba(7,27,51,.35));
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+
+    .left{display:flex;align-items:center;gap:12px;min-width:0;}
+    .logo{
+      width:120px;height:42px;border-radius:12px;
+      border:1px dashed rgba(255,255,255,.25);
+      display:flex;align-items:center;justify-content:center;
+      color:rgba(255,255,255,.55);font-size:12px;
+      flex:0 0 auto;
+    }
+    .brand{display:flex;flex-direction:column;gap:2px;min-width:0}
+    .brand .kicker{font-size:12px;color:rgba(255,255,255,.75)}
+    .brand .title{
+      font-family:"Playfair Display",serif;
+      font-size:18px;
+      color:#FFF2C7;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 46vw;
+    }
+
+    .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.18);
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 800;
+      transition: .18s ease;
+      white-space: nowrap;
+    }
+    .btn:hover{background: rgba(255,255,255,.12); transform: translateY(-1px);}
+
+    .btn.primary{
+      background: linear-gradient(135deg, var(--gold), #FFD36B);
+      color: #3B2A00;
+      border: none;
+      box-shadow: 0 12px 30px rgba(255,167,0,.18);
+    }
+    .btn.primary:hover{ transform: translateY(-1px) scale(1.01); }
+
+    /* Language selector */
+    .lang{
+      display:flex;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px;
+      overflow:hidden;
+    }
+    .lang button{
+      border:none;
+      background: transparent;
+      color: rgba(255,255,255,.85);
+      padding: 10px 12px;
+      font-weight: 900;
+      cursor:pointer;
+      transition:.18s ease;
+      font-size:12px;
+    }
+    .lang button.active{
+      background: rgba(255,255,255,.12);
+      color: #fff;
+    }
+    .lang button:hover{ background: rgba(255,255,255,.10); }
+
+    main{
+      position:relative;
+      z-index: 5;
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 28px 18px 80px;
+    }
+
+    /* Dynamic hero */
+    .hero{
+      position: relative;
+      border-radius: 26px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,.18);
+      background:
+        radial-gradient(700px 280px at 10% 0%, rgba(255,167,0,.22), transparent 55%),
+        radial-gradient(600px 260px at 85% 10%, rgba(12,77,155,.26), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: conic-gradient(from 180deg at 50% 50%,
+        rgba(255,167,0,.0),
+        rgba(255,167,0,.22),
+        rgba(12,77,155,.22),
+        rgba(255,255,255,.08),
+        rgba(255,167,0,.0)
+      );
+      filter: blur(18px);
+      opacity: .55;
+      animation: spin 10s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes spin{
+      from{ transform: rotate(0deg); }
+      to  { transform: rotate(360deg); }
+    }
+
+    .hero-inner{
+      position:relative;
+      z-index:1;
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    h1{
+      font-family:"Playfair Display",serif;
+      font-size: 42px;
+      color: #FFF2C7;
+      letter-spacing: .3px;
+      line-height: 1.06;
+    }
+    .sub{
+      margin-top: 10px;
+      max-width: 70ch;
+      color: rgba(255,255,255,.86);
+      line-height: 1.65;
+      font-size: 13.5px;
+    }
+    .badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+      font-size: 12px;
+      color: rgba(255,255,255,.90);
+      box-shadow: 0 10px 25px rgba(0,0,0,.18);
+    }
+
+    /* Unbalanced modular layout */
+    .stack{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;margin-top:18px}
+    .card{
+      max-width:100%;
+      min-width:0;
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      box-shadow: 0 18px 55px rgba(0,0,0,.28);
+      position:relative;
+      overflow:hidden;
+      transform: translateZ(0);
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,167,0,.30);
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.045));
+    }
+
+    .w-60{flex:1 1 60%}
+    .w-40{flex:1 1 38%}
+    .w-50{flex:1 1 48%}
+    .w-30{flex:1 1 30%}
+    .w-70{flex:1 1 68%}
+    .w-100{flex:1 1 100%}
+
+    .card h3{
+      font-family:"Playfair Display",serif;
+      font-size: 21px;
+      color: #FFF2C7;
+      margin-bottom: 10px;
+    }
+    .muted{color: var(--muted)}
+    .p{line-height:1.65; color: rgba(255,255,255,.86); font-size: 13.5px}
+    .list{margin-top: 10px; display:flex; flex-direction:column; gap:10px}
+    .li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+    .li b{color:#EAF0F7}
+    .li span{color:rgba(255,255,255,.80); font-size: 13px; line-height:1.45}
+
+    /* Avatar PNG */
+    .avatar{
+      width:174px; height:174px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 16px 40px rgba(0,0,0,.32);
+      display:flex; align-items:center; justify-content:center;
+      position:relative;
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover; /* change to contain if you prefer */
+      display:block;
+    }
+
+    .profileRow{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+    .profileMeta{display:flex;flex-direction:column;gap:5px}
+    .metaTitle{font-weight:900}
+    .metaSub{font-size:13px;color:rgba(255,255,255,.82);line-height:1.4}
+
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px}
+
+    .alert{
+      margin-top: 12px;
+      border-radius: 18px;
+      padding: 14px;
+      border: 1px solid rgba(255,107,107,.35);
+      background: rgba(255,107,107,.10);
+      color: #ffd1d1;
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    /* Fade-in on scroll */
+    .reveal{opacity:0; transform: translateY(10px); transition: .55s ease}
+    .reveal.show{opacity:1; transform: translateY(0)}
+
+    footer{
+      position:relative;
+      z-index: 5;
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 18px 18px 34px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.68);
+    }
+    .footerRow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .footerRow a{color: rgba(255,255,255,.78); text-decoration:none}
+    .footerRow a:hover{color:#fff}
+
+    @media (max-width: 850px){
+      header{flex-wrap:wrap;padding:12px 14px}
+      .left{width:100%;justify-content:space-between}
+      .right{width:100%;justify-content:center}
+      .logo{width:96px;height:36px}
+      h1{font-size: 34px}
+      .w-60,.w-40,.w-50,.w-30,.w-70,.w-100{flex:1 1 100%}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-sheen"></div>
+
+  <!-- subtle particles -->
+  <span class="particle" style="left:8%;  animation-duration:12s; opacity:.22;"></span>
+  <span class="particle" style="left:22%; animation-duration:10s; width:12px;height:12px; opacity:.18;"></span>
+  <span class="particle" style="left:46%; animation-duration:14s; width:9px;height:9px; opacity:.14;"></span>
+  <span class="particle" style="left:68%; animation-duration:11s; width:13px;height:13px; opacity:.20;"></span>
+  <span class="particle" style="left:84%; animation-duration:13s; width:8px;height:8px; opacity:.16;"></span>
+
+  <header>
+    <div class="left">
+      <div class="logo">FMPT.net</div>
+      <div class="brand">
+        <div class="kicker">FMPT Hub</div>
+        <div class="title" data-i18n="about_title">About</div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="lang" role="tablist" aria-label="Language">
+        <button id="langEN" type="button" class="active" aria-selected="true">EN</button>
+        <button id="langFR" type="button" aria-selected="false">FR</button>
+      </div>
+
+      <a class="btn" href="./index.html">← <span data-i18n="back_dashboard">Dashboard</span></a>
+      <a class="btn primary" href="./support.html">❤️ <span data-i18n="support_btn">Support</span></a>
+      <a class="btn" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">💬 Discord</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero reveal">
+      <div class="hero-inner">
+        <div style="flex:1 1 520px; min-width:0;">
+          <h1 data-i18n="hero_h1">Built by students, for students.</h1>
+          <p class="sub" data-i18n="hero_p">
+            FMPT Hub is a student-built platform that organizes documents, schedules, and past exams in one clean place.
+            Designed to be easy to navigate, and to grow through student contributions.
+          </p>
+          <div class="badges">
+            <span class="badge">📌 <span data-i18n="badge_public_uni">Public university</span></span>
+            <span class="badge">✨ <span data-i18n="badge_mostly_free">Mostly free</span></span>
+            <span class="badge">🧭 <span data-i18n="badge_organized">Organized & easy to navigate</span></span>
+          </div>
+        </div>
+
+        <div style="flex:0 0 auto; align-self:stretch; display:flex; align-items:flex-end;">
+          <div class="avatar" aria-label="Maintainer avatar">
+            <img src="avatar.png" alt="FMPT Student Avatar" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stack">
+      <!-- WHY -->
+      <div class="card w-60 reveal">
+        <h3 data-i18n="why_title">Why this platform exists</h3>
+        <p class="p" data-i18n="why_p">
+          FMPT is a public university — free for students aspiring to become doctors and pharmacists.
+          Yet one of the biggest challenges is finding resources organized and easy to navigate.
+          Files get scattered across drives and chats, and it becomes stressful to track what’s important.
+        </p>
+
+        <div class="list">
+          <div class="li">
+            <div>🧩</div>
+            <div>
+              <b data-i18n="why_li1_b">Scattered resources</b><br/>
+              <span data-i18n="why_li1_s">Files get lost across group chats, drives, and random folders.</span>
+            </div>
+          </div>
+          <div class="li">
+            <div>🗂️</div>
+            <div>
+              <b data-i18n="why_li2_b">Hard to navigate</b><br/>
+              <span data-i18n="why_li2_s">Even when resources exist, they aren’t always labeled or organized.</span>
+            </div>
+          </div>
+          <div class="li">
+            <div>📝</div>
+            <div>
+              <b data-i18n="why_li3_b">Past exams matter</b><br/>
+              <span data-i18n="why_li3_s">Some exams rely heavily on past exams — access should be fair.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAID MATERIALS -->
+      <div class="card w-40 reveal">
+        <h3 data-i18n="paid_title">About paid materials</h3>
+        <p class="p" data-i18n="paid_p">
+          This platform isn’t against people being paid for real work. If someone produces high-quality original material,
+          they deserve fair compensation. The issue is when students are pushed into expensive bundles with low-quality scans,
+          missing corrections, and no transparency — especially when there’s no competition.
+        </p>
+
+        <div class="alert">
+          <b data-i18n="paid_alert_b">Principle:</b>
+          <span data-i18n="paid_alert_s">Effort should be rewarded — not exploitation. Students deserve choice.</span>
+        </div>
+      </div>
+
+      <!-- CONTRIBUTIONS + VERIFY -->
+      <div class="card w-50 reveal">
+        <h3 data-i18n="contrib_title">Contributions & verification</h3>
+        <p class="p" data-i18n="contrib_p">
+          Every contribution is appreciated. Submissions are reviewed before publication to keep the platform accurate,
+          relevant, and well-organized.
+        </p>
+
+        <div class="list">
+          <div class="li">
+            <div>✅</div>
+            <div>
+              <b data-i18n="contrib_li1_b">Reviewed before posting</b><br/>
+              <span data-i18n="contrib_li1_s">Quality, relevance, and clarity checks.</span>
+            </div>
+          </div>
+          <div class="li">
+            <div>🏷️</div>
+            <div>
+              <b data-i18n="contrib_li2_b">Optional credits</b><br/>
+              <span data-i18n="contrib_li2_s">If you want to be credited, it will be done the way you choose.</span>
+            </div>
+          </div>
+          <div class="li">
+            <div>🧾</div>
+            <div>
+              <b data-i18n="contrib_li3_b">Clean organization</b><br/>
+              <span data-i18n="contrib_li3_s">Everything is structured so students can find things fast.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn" href="mailto:FMPTSTUDENT@gmail.com?subject=%5BFMPT%20Hub%5D%20Contribution&body=Hi!%0A%0AI%20want%20to%20share%20resources%20for%3A%0A-%20Track%20(Medicine/Pharmacy)%3A%0A-%20Year%3A%0A-%20Module%3A%0A%0A(Attach%20files%20here)%0A" target="_blank" rel="noopener">
+            📎 <span data-i18n="cta_email">Share by Email</span>
+          </a>
+          <a class="btn" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">
+            💬 <span data-i18n="cta_discord">Share on Discord</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- WHO RUNS -->
+      <div class="card w-50 reveal">
+        <h3 data-i18n="who_title">Who runs FMPT Hub?</h3>
+        <div class="profileRow">
+          <div class="avatar" style="width:86px;height:86px;border-radius:26px">
+            <img src="avatar.png" alt="FMPT Student Avatar" />
+          </div>
+          <div class="profileMeta">
+            <div class="metaTitle" data-i18n="who_name">An FMPT Student</div>
+            <div class="metaSub" data-i18n="who_role">Creator & maintainer (anonymous)</div>
+            <div class="metaSub" data-i18n="who_note">Identity is private for personal and practical reasons.</div>
+          </div>
+        </div>
+
+        <p class="p" style="margin-top:12px" data-i18n="who_p">
+          My identity stays private, but the mission is simple: make resources accessible, organized, and easy to navigate.
+          What matters is not who I am — but what we’re building together.
+        </p>
+      </div>
+
+      <!-- SUPPORT US -->
+      <div class="card w-70 reveal">
+        <h3 data-i18n="support_title">Support us (why it matters)</h3>
+        <p class="p" data-i18n="support_p">
+          FMPT Hub takes real time and real costs (domain, storage, maintenance). I’m currently paying out of pocket so the platform stays mostly free.
+          Your support keeps it stable and helps add more resources faster.
+        </p>
+
+        <div class="list">
+          <div class="li">
+            <div>💛</div>
+            <div>
+              <b data-i18n="support_way1_b">Contribute files</b><br/>
+              <span data-i18n="support_way1_s">Past exams, corrections, PDFs, notes — even one file helps.</span>
+            </div>
+          </div>
+
+          <div class="li">
+            <div>📣</div>
+            <div>
+              <b data-i18n="support_way2_b">Spread the word</b><br/>
+              <span data-i18n="support_way2_s">Invite classmates so more students contribute and benefit.</span>
+            </div>
+          </div>
+
+          <div class="li">
+            <div>❤️</div>
+            <div>
+              <b data-i18n="support_way3_b">Optional donations</b><br/>
+              <span data-i18n="support_way3_s">If you can, small support helps cover costs and keep it alive.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="./support.html">❤️ <span data-i18n="cta_support_page">Go to Support Page</span></a>
+          <a class="btn" href="mailto:FMPTSTUDENT@gmail.com?subject=%5BFMPT%20Hub%5D%20Support&body=Hi!%0A%0AI%20want%20to%20support%20FMPT%20Hub.%0A" target="_blank" rel="noopener">
+            ✉️ <span data-i18n="cta_contact">Contact</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- DISCLAIMER -->
+      <div class="card w-30 reveal">
+        <h3 data-i18n="disc_title">Disclaimer</h3>
+        <p class="p" data-i18n="disc_p">
+          FMPT Hub is a student-made website with no official affiliation with the Faculty of Medicine and Pharmacy of Tangier.
+          While every effort is made to verify information, mistakes can happen. Always confirm critical announcements through official channels.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footerRow">
+      <div>© <span id="yearNow"></span> FMPT Hub</div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <!-- Inline-styled footer button (as requested) -->
+        <a href="./about.html"
+           style="
+             display:inline-flex;align-items:center;gap:8px;
+             padding:10px 14px;border-radius:14px;
+             background:rgba(255,255,255,.08);
+             border:1px solid rgba(255,255,255,.18);
+             color:#EAF0F7;text-decoration:none;font-weight:900;
+             transition:.18s ease;
+           "
+           onmouseover="this.style.transform='translateY(-1px)';this.style.background='rgba(255,255,255,.12)'"
+           onmouseout="this.style.transform='translateY(0)';this.style.background='rgba(255,255,255,.08)'"
+        >
+          ℹ️ About FMPT Hub
+        </a>
+
+        <a href="./index.html" data-i18n="footer_dashboard">Dashboard</a>
+        <a href="./support.html" data-i18n="footer_support">Support</a>
+        <a href="mailto:FMPTSTUDENT@gmail.com">FMPTSTUDENT@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year in footer
+    document.getElementById("yearNow").textContent = new Date().getFullYear();
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add("show");
+      });
+    },{threshold:0.12});
+    document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+    // i18n strings
+    const STR = {
+      en: {
+        about_title: "About",
+        back_dashboard: "Dashboard",
+        support_btn: "Support",
+
+        hero_h1: "Built by students, for students.",
+        hero_p: "FMPT Hub is a student-built platform that organizes documents, schedules, and past exams in one clean place. Designed to be easy to navigate, and to grow through student contributions.",
+        badge_public_uni: "Public university",
+        badge_mostly_free: "Mostly free",
+        badge_organized: "Organized & easy to navigate",
+
+        why_title: "Why this platform exists",
+        why_p: "FMPT is a public university — free for students aspiring to become doctors and pharmacists. Yet one of the biggest challenges is finding resources organized and easy to navigate. Files get scattered across drives and chats, and it becomes stressful to track what’s important.",
+        why_li1_b: "Scattered resources",
+        why_li1_s: "Files get lost across group chats, drives, and random folders.",
+        why_li2_b: "Hard to navigate",
+        why_li2_s: "Even when resources exist, they aren’t always labeled or organized.",
+        why_li3_b: "Past exams matter",
+        why_li3_s: "Some exams rely heavily on past exams — access should be fair.",
+
+        paid_title: "About paid materials",
+        paid_p: "This platform isn’t against people being paid for real work. If someone produces high-quality original material, they deserve fair compensation. The issue is when students are pushed into expensive bundles with low-quality scans, missing corrections, and no transparency — especially when there’s no competition.",
+        paid_alert_b: "Principle:",
+        paid_alert_s: "Effort should be rewarded — not exploitation. Students deserve choice.",
+
+        contrib_title: "Contributions & verification",
+        contrib_p: "Every contribution is appreciated. Submissions are reviewed before publication to keep the platform accurate, relevant, and well-organized.",
+        contrib_li1_b: "Reviewed before posting",
+        contrib_li1_s: "Quality, relevance, and clarity checks.",
+        contrib_li2_b: "Optional credits",
+        contrib_li2_s: "If you want to be credited, it will be done the way you choose.",
+        contrib_li3_b: "Clean organization",
+        contrib_li3_s: "Everything is structured so students can find things fast.",
+        cta_email: "Share by Email",
+        cta_discord: "Share on Discord",
+
+        who_title: "Who runs FMPT Hub?",
+        who_name: "An FMPT Student",
+        who_role: "Creator & maintainer (anonymous)",
+        who_note: "Identity is private for personal and practical reasons.",
+        who_p: "My identity stays private, but the mission is simple: make resources accessible, organized, and easy to navigate. What matters is not who I am — but what we’re building together.",
+
+        support_title: "Support us (why it matters)",
+        support_p: "FMPT Hub takes real time and real costs (domain, storage, maintenance). I’m currently paying out of pocket so the platform stays mostly free. Your support keeps it stable and helps add more resources faster.",
+        support_way1_b: "Contribute files",
+        support_way1_s: "Past exams, corrections, PDFs, notes — even one file helps.",
+        support_way2_b: "Spread the word",
+        support_way2_s: "Invite classmates so more students contribute and benefit.",
+        support_way3_b: "Optional donations",
+        support_way3_s: "If you can, small support helps cover costs and keep it alive.",
+        cta_support_page: "Go to Support Page",
+        cta_contact: "Contact",
+
+        disc_title: "Disclaimer",
+        disc_p: "FMPT Hub is a student-made website with no official affiliation with the Faculty of Medicine and Pharmacy of Tangier. While every effort is made to verify information, mistakes can happen. Always confirm critical announcements through official channels.",
+
+        footer_dashboard: "Dashboard",
+        footer_support: "Support"
+      },
+
+      fr: {
+        about_title: "À propos",
+        back_dashboard: "Tableau de bord",
+        support_btn: "Soutenir",
+
+        hero_h1: "Par des étudiants, pour des étudiants.",
+        hero_p: "FMPT Hub est une plateforme créée par des étudiants pour organiser documents, plannings et anciens examens en un seul endroit clair. Pensée pour être simple à utiliser et pour grandir grâce aux contributions des étudiants.",
+        badge_public_uni: "Université publique",
+        badge_mostly_free: "Majoritairement gratuit",
+        badge_organized: "Organisé & facile à naviguer",
+
+        why_title: "Pourquoi cette plateforme existe",
+        why_p: "La FMPT est une université publique — gratuite pour les étudiants aspirant à devenir médecins et pharmaciens. Pourtant, l’un des plus grands défis est de trouver des ressources bien organisées et faciles à consulter. Les fichiers sont dispersés entre drives et groupes, ce qui rend difficile de suivre l’essentiel.",
+        why_li1_b: "Ressources dispersées",
+        why_li1_s: "Les fichiers se perdent entre discussions, drives et dossiers.",
+        why_li2_b: "Difficile à naviguer",
+        why_li2_s: "Même lorsque des ressources existent, elles ne sont pas toujours bien classées.",
+        why_li3_b: "Les anciens examens comptent",
+        why_li3_s: "Certains examens dépendent fortement des sujets précédents : l’accès doit être équitable.",
+
+        paid_title: "À propos des supports payants",
+        paid_p: "La plateforme n’est pas contre le fait d’être payé pour un vrai travail. Si quelqu’un produit un contenu original et de qualité, il mérite une rémunération juste. Le problème, c’est lorsque les étudiants sont poussés à acheter des packs chers, avec des scans de mauvaise qualité, sans corrections et sans transparence — surtout quand il n’y a pas de concurrence.",
+        paid_alert_b: "Principe :",
+        paid_alert_s: "L’effort doit être récompensé — pas l’exploitation. Les étudiants méritent le choix.",
+
+        contrib_title: "Contributions & vérification",
+        contrib_p: "Chaque contribution est appréciée. Les fichiers sont vérifiés avant publication afin de garder une plateforme exacte, pertinente et bien organisée.",
+        contrib_li1_b: "Vérifié avant publication",
+        contrib_li1_s: "Contrôle de qualité, de pertinence et de clarté.",
+        contrib_li2_b: "Crédits au choix",
+        contrib_li2_s: "Si vous souhaitez être crédité, ce sera fait selon votre préférence.",
+        contrib_li3_b: "Organisation claire",
+        contrib_li3_s: "Tout est structuré pour que l’étudiant trouve vite ce qu’il cherche.",
+        cta_email: "Partager par Email",
+        cta_discord: "Partager sur Discord",
+
+        who_title: "Qui gère FMPT Hub ?",
+        who_name: "Un(e) étudiant(e) de la FMPT",
+        who_role: "Créateur & mainteneur (anonyme)",
+        who_note: "Identité privée pour des raisons personnelles et pratiques.",
+        who_p: "Mon identité reste privée, mais la mission est simple : rendre les ressources accessibles, organisées et faciles à naviguer. L’important n’est pas qui je suis — mais ce que nous construisons ensemble.",
+
+        support_title: "Soutenir la plateforme (pourquoi c’est important)",
+        support_p: "FMPT Hub demande du temps et des coûts réels (domaine, stockage, maintenance). Je paie actuellement de ma poche pour que la plateforme reste majoritairement gratuite. Votre soutien la rend plus stable et accélère l’ajout de ressources.",
+        support_way1_b: "Partager des fichiers",
+        support_way1_s: "Anciens examens, corrections, PDFs, notes — même un seul fichier aide.",
+        support_way2_b: "Faire connaître la plateforme",
+        support_way2_s: "Invitez vos camarades : plus d’étudiants = plus de contributions.",
+        support_way3_b: "Dons (optionnel)",
+        support_way3_s: "Si vous pouvez, même un petit don aide à couvrir les coûts et garder le site en ligne.",
+        cta_support_page: "Aller à la page Soutien",
+        cta_contact: "Contact",
+
+        disc_title: "Avertissement",
+        disc_p: "FMPT Hub est un site créé par des étudiants, sans affiliation officielle avec la Faculté de Médecine et de Pharmacie de Tanger. Malgré la vérification, des erreurs peuvent exister. Veuillez toujours confirmer les annonces importantes via les canaux officiels.",
+
+        footer_dashboard: "Tableau de bord",
+        footer_support: "Soutenir"
+      }
+    };
+
+    function setLang(lang){
+      const isEN = lang === "en";
+      document.getElementById("langEN").classList.toggle("active", isEN);
+      document.getElementById("langFR").classList.toggle("active", !isEN);
+      document.getElementById("langEN").setAttribute("aria-selected", String(isEN));
+      document.getElementById("langFR").setAttribute("aria-selected", String(!isEN));
+
+      document.querySelectorAll("[data-i18n]").forEach(el=>{
+        const k = el.getAttribute("data-i18n");
+        const txt = STR[lang][k];
+        if (typeof txt === "string") el.textContent = txt;
+      });
+
+      localStorage.setItem("fmpt_lang", lang);
+      document.documentElement.lang = lang;
+    }
+
+    document.getElementById("langEN").addEventListener("click", ()=>setLang("en"));
+    document.getElementById("langFR").addEventListener("click", ()=>setLang("fr"));
+
+    // init language
+    const savedLang = localStorage.getItem("fmpt_lang");
+    setLang(savedLang === "fr" ? "fr" : "en");
+  </script>
+</body>
+</html>
