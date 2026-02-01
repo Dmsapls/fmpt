@@ -676,10 +676,101 @@ grid-template-columns: 74px repeat(7, 108px);
     bottom: 10px;
   }
 }
+/* ===== TEMP Recruiting Banner (General) ===== */
+.recruit-banner{
+  border-radius:18px;
+  padding:16px 16px 14px;
+  border:1px solid rgba(255,70,70,.55);
+  background:
+    radial-gradient(220px 120px at 10% 10%, rgba(255,70,70,.22), transparent 65%),
+    linear-gradient(180deg, rgba(255,70,70,.14), rgba(255,255,255,.04));
+  box-shadow: 0 18px 55px rgba(0,0,0,.35);
+  margin-bottom:12px;
+  position:relative;
+  overflow:hidden;
+}
 
+.recruit-banner::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background: conic-gradient(from 180deg,
+    rgba(255,70,70,0),
+    rgba(255,70,70,.55),
+    rgba(255,167,0,.45),
+    rgba(255,255,255,.15),
+    rgba(255,70,70,0)
+  );
+  filter: blur(18px);
+  opacity:.55;
+  animation: recruitSpin 7s linear infinite;
+  pointer-events:none;
+}
+@keyframes recruitSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
+.recruit-title{
+  position:relative;
+  font-weight:900;
+  letter-spacing:.10em;
+  font-size:12px;
+  text-transform:uppercase;
+  color:#FFE3E3;
+  margin-bottom:8px;
+}
 
+.recruit-text{
+  position:relative;
+  color:#FFEAEA;
+  font-size:13px;
+  line-height:1.45;
+  opacity:.95;
+}
 
+.recruit-actions{
+  position:relative;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.recruit-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  font-weight:800;
+  font-size:12px;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.06);
+  color:#EAF0F7;
+  cursor:pointer;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.recruit-btn.primary{
+  border:none;
+  background: linear-gradient(135deg, #FF3B3B, #FF8A3B);
+  color:#2B0000;
+  box-shadow: 0 14px 35px rgba(255,70,70,.25);
+}
+
+.recruit-btn.ghost{
+  background: transparent;
+  border:1px solid rgba(255,70,70,.45);
+  color:#FFD0D0;
+}
+
+.recruit-btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.10)}
+.recruit-btn.primary:hover{background: linear-gradient(135deg, #FF5A5A, #FF9B59)}
+
+@media (max-width: 520px){
+  .recruit-actions{flex-direction:column; align-items:stretch}
+  .recruit-btn{width:100%}
+}
 
 
 
@@ -722,6 +813,21 @@ footer{text-align:center;color:#9FB4CF;font-size:14px;padding:40px}
 </p>
   
       </div>
+<!-- TEMP: Recruiting banner (General) -->
+<div id="recruitBanner" class="recruit-banner" role="alert">
+  <div class="recruit-title">🚨 RECRUITING — PROMO CONTRIBUTORS NEEDED</div>
+  <div class="recruit-text">
+    We’re looking for <b>trusted students in each year/promo</b> to help keep
+    <b>announcements accurate</b> and organize <b>promo documents</b>.
+    If you want to help your classmates, join us on Discord or email us.
+  </div>
+
+  <div class="recruit-actions">
+    <a class="recruit-btn primary" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">Join on Discord</a>
+    <a class="recruit-btn" href="mailto:FMPTSTUDENT@gmail.com?subject=FMPT%20Hub%20Contributor&body=Hi%2C%20I%20want%20to%20help%20as%20a%20promo%20contributor.%0A%0AYear%2FPromo%3A%20%0ATrack%20(Med%2FPharma)%3A%20%0AWhat%20I%20can%20help%20with%3A%20Announcements%20/%20Docs%20/%20Both%0A" >Email</a>
+    <button class="recruit-btn ghost" id="recruitDismiss" type="button">Dismiss</button>
+  </div>
+</div>
 
     <div class="card w-40 ann-card">
       <h3>📣 Announcements</h3>
@@ -872,6 +978,26 @@ footer{text-align:center;color:#9FB4CF;font-size:14px;padding:40px}
       localStorage.setItem("fmpt_note", noteEl.value);
     });
   }
+/* =========================
+   TEMP Recruiting Banner
+========================= */
+const recruitBanner = safeEl("recruitBanner");
+const recruitDismiss = safeEl("recruitDismiss");
+
+function showRecruitBanner(){
+  if (!recruitBanner) return;
+  const hidden = localStorage.getItem("fmpt_recruit_hide") === "1";
+  recruitBanner.style.display = hidden ? "none" : "block";
+}
+
+if (recruitDismiss){
+  recruitDismiss.addEventListener("click", ()=>{
+    localStorage.setItem("fmpt_recruit_hide","1");
+    showRecruitBanner();
+  });
+}
+
+showRecruitBanner();
 
   /* =========================
      CLUBS
