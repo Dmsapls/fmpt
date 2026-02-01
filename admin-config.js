@@ -1,1 +1,2 @@
-window.FMPT_ADMIN_PASS = "nigga";
+window.FMPT_ADMIN_PASS = "FuckPHINIX";
+
