@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="admin-config.js"></script>
+
+<meta charset="UTF-8" />
+<title>FMPT Hub — Admin Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --gold:#FFA700;
+    --blue:#0C4D9B;
+    --deep:#071B33;
+    --glass:rgba(255,255,255,.07);
+    --border:rgba(255,255,255,.16);
+    --text:#EAF0F7;
+    --muted:#9FB4CF;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(900px 600px at 12% -10%, rgba(255,167,0,.18), transparent 45%),
+      radial-gradient(800px 600px at 90% 10%, rgba(12,77,155,.28), transparent 48%),
+      linear-gradient(180deg, #050E1B, #071B33 65%, #050E1B);
+    min-height:100vh;
+    padding:34px 14px;
+  }
+  .container{max-width:980px;margin:0 auto}
+  .top{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  h1{
+    margin:0;
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+    letter-spacing:.02em;
+    background:linear-gradient(90deg, #FFF3C4, var(--gold), #8FC2FF);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .muted{color:var(--muted);font-size:13px;line-height:1.4}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 12px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.06);
+    font-size:12px;color:#C7D5E6;
+  }
+  .pill b{color:#FFF2C7}
+
+  .card{
+    margin-top:14px;
+    padding:18px;
+    border-radius:18px;
+    border:1px solid var(--border);
+    background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+    backdrop-filter: blur(10px);
+    box-shadow:0 18px 55px rgba(0,0,0,.35);
+  }
+  .card h3{
+    margin:0 0 10px;
+    font-family:"Playfair Display",serif;
+    font-size:18px;
+    color:#FFF2C7;
+  }
+
+  /* ---- FORM ---- */
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  @media(max-width:720px){
+    .grid{grid-template-columns:1fr}
+  }
+  label{
+    display:block;
+    font-size:12px;
+    color:#C7D5E6;
+    margin:10px 0 6px;
+    font-weight:700;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+  }
+  input, textarea, select{
+    width:100%;
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.06);
+    color:var(--text);
+    font-size:14px;
+    outline:none;
+    transition:.18s ease;
+  }
+  input:focus, textarea:focus, select:focus{
+    border-color:rgba(255,167,0,.55);
+    box-shadow:0 0 0 3px rgba(255,167,0,.12);
+  }
+  textarea{min-height:92px;resize:vertical}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row>.col{flex:1 1 200px;min-width:200px}
+
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  button{
+    padding:10px 14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.06);
+    color:var(--text);
+    cursor:pointer;
+    font-weight:800;
+    font-size:13px;
+    transition:.18s ease;
+  }
+  button.primary{
+    border:none;
+    background:linear-gradient(135deg, var(--gold), #FFD36B);
+    color:#3B2A00;
+    box-shadow:0 12px 30px rgba(255,167,0,.20);
+  }
+  button.danger{
+    border:1px solid rgba(255,70,70,.30);
+    background:rgba(255,70,70,.10);
+    color:#FFD0D0;
+  }
+  button:hover{transform:translateY(-1px); background:rgba(255,255,255,.10)}
+  button.primary:hover{filter:brightness(1.04)}
+  button:active{transform:translateY(0px) scale(.98)}
+  button[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+
+  .preview{
+    margin-top:12px;
+    padding:12px;
+    border-radius:14px;
+    border:1px dashed rgba(255,255,255,.18);
+    color:#C7D5E6;
+    font-size:13px;
+    line-height:1.55;
+  }
+
+  .warn{
+    color:#FFD0D0;
+    background:rgba(255,70,70,.10);
+    border:1px solid rgba(255,70,70,.25);
+    padding:10px 12px;
+    border-radius:14px;
+    font-size:13px;
+    margin-top:10px;
+  }
+
+  /* ---- MANAGE LIST ---- */
+  .manage-top{
+    display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .search{
+    display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+  }
+  .search input{max-width:320px}
+  .count-pill{
+    padding:6px 10px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.05);
+    color:#C7D5E6;font-size:12px;
+  }
+
+  .list{
+    display:flex;flex-direction:column;gap:10px;
+    max-height:460px;overflow:auto;padding-right:6px;
+  }
+  .item{
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.05);
+    padding:12px;
+  }
+  .item-top{
+    display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    align-items:flex-start;
+  }
+  .meta{
+    display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+    color:#C7D5E6;font-size:12px;
+  }
+  .badge{
+    padding:5px 9px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.05);
+    font-weight:800;
+  }
+  .badge.exam{border-color:rgba(255,167,0,.35); background:rgba(255,167,0,.10); color:#FFE6B2}
+  .badge.urgent{border-color:rgba(255,70,70,.35); background:rgba(255,70,70,.10); color:#FFD0D0}
+  .badge.info{border-color:rgba(143,194,255,.28); background:rgba(12,77,155,.18); color:#D8ECFF}
+
+  .title{
+    font-weight:900;
+    color:#EAF0F7;
+    margin-top:6px;
+    font-size:14px;
+  }
+  .msg{
+    color:#C7D5E6;
+    font-size:13px;
+    line-height:1.45;
+    margin-top:6px;
+    white-space:pre-wrap;
+  }
+  .item-actions{
+    display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+    margin-top:10px;
+  }
+  .small-btn{
+    padding:8px 10px;border-radius:12px;font-size:12px;font-weight:900;
+  }
+
+  footer{
+    text-align:center;
+    margin:22px 0 6px;
+    color:var(--muted);
+    font-size:12px;
+  }
+</style>
+</head>
+
+<body>
+    <!-- ADMIN LOCK SCREEN -->
+<div id="adminLock" style="
+  position:fixed;
+  inset:0;
+  background:#050E1B;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+">
+
+  <div style="
+    background:#071B33;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:22px;
+    padding:32px;
+    width:90%;
+    max-width:380px;
+    text-align:center;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);
+  ">
+
+    <h2 style="
+      font-family:'Playfair Display',serif;
+      margin-bottom:8px;
+      color:#FFF2C7;
+    ">Admin Access</h2>
+
+    <p style="
+      color:#9FB4CF;
+      font-size:13px;
+      margin-bottom:18px;
+    ">
+      FMPT Hub — Restricted Area
+    </p>
+
+    <input
+      type="password"
+      id="adminPass"
+      placeholder="Enter password"
+      style="
+        width:100%;
+        padding:12px;
+        border-radius:12px;
+        border:1px solid rgba(255,255,255,.2);
+        background:rgba(255,255,255,.06);
+        color:white;
+        margin-bottom:14px;
+        outline:none;
+      "
+    >
+
+    <button
+      id="adminLoginBtn"
+      style="
+        width:100%;
+        padding:12px;
+        border-radius:12px;
+        border:none;
+        font-weight:700;
+        background:linear-gradient(135deg,#FFA700,#FFD36B);
+        color:#3B2A00;
+        cursor:pointer;
+      "
+    >
+      Unlock
+    </button>
+
+    <div
+      id="adminError"
+      style="
+        color:#FF9B9B;
+        font-size:12px;
+        margin-top:10px;
+        display:none;
+      "
+    >
+      Wrong password.
+    </div>
+
+  </div>
+</div>
+
+<div id="adminApp" style="display:none">
+  <div class="container">
+
+
+  <div class="top">
+    <div>
+      <h1>FMPT Hub — Admin Panel</h1>
+      <div class="muted">Announcements (Local JSON Editor) • Add / Edit / Delete</div>
+    </div>
+    <div class="pill">Loaded file: <b id="fileNamePill">none</b></div>
+  </div>
+
+  <!-- LOAD -->
+  <div class="card">
+    <h3>1️⃣ Load Existing Announcements JSON</h3>
+    <input type="file" id="fileInput" accept=".json" />
+    <div class="warn">
+      Browsers cannot overwrite files in-place. This tool keeps the <b>same filename</b>,
+      then you upload it to GitHub to replace the old file.
+    </div>
+  </div>
+
+  <!-- ADD / EDIT FORM -->
+  <div class="card">
+    <h3>2️⃣ <span id="formModeLabel">Add</span> Announcement</h3>
+
+    <div class="grid">
+      <div>
+        <label>Title</label>
+        <input id="aTitle" placeholder="e.g. Exam moved / New PDF uploaded..." />
+      </div>
+      <div>
+        <label>Date</label>
+        <input type="date" id="aDate" />
+      </div>
+    </div>
+
+    <label>Message</label>
+    <textarea id="aMessage" placeholder="Write the announcement text…"></textarea>
+
+    <div class="row">
+      <div class="col">
+        <label>Type</label>
+        <select id="aType">
+          <option value="info">info</option>
+          <option value="exam">exam</option>
+          <option value="urgent">urgent</option>
+        </select>
+      </div>
+
+      <div class="col">
+        <label>Important ⭐</label>
+        <select id="aImportant">
+          <option value="false">false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+
+      <div class="col">
+        <label>Expiry date (optional)</label>
+        <input type="date" id="aExpiry" />
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="primary" id="mainActionBtn" type="button">➕ Add (append on top)</button>
+      <button type="button" id="clearBtn">Clear</button>
+      <button type="button" id="cancelEditBtn" class="danger" style="display:none;">Cancel edit</button>
+    </div>
+
+    <div class="preview" id="previewBox">No file loaded yet.</div>
+  </div>
+
+  <!-- MANAGE LIST -->
+  <div class="card">
+    <h3>3️⃣ Manage Announcements</h3>
+
+    <div class="manage-top">
+      <div class="search">
+        <input id="searchBox" placeholder="Search title/message/type/date…" />
+        <button type="button" class="small-btn" id="resetSearchBtn">Reset</button>
+      </div>
+      <div class="count-pill">Showing: <b id="showCount">0</b></div>
+    </div>
+
+    <div class="list" id="annList"></div>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="card">
+    <h3>4️⃣ Export Updated JSON</h3>
+    <div class="btn-row">
+      <button type="button" id="downloadBtn">⬇ Download updated JSON</button>
+    </div>
+  </div>
+
+  <footer>FMPT Hub Admin Tool • Keep this file private</footer>
+</div>
+  </div>
+
+<script>
+  let annData = { announcements: [] };
+  let loadedFileName = "announcements.json";
+
+  // edit state
+  let editingIndex = null;
+
+  const fileNamePill = document.getElementById("fileNamePill");
+  const fileInput = document.getElementById("fileInput");
+
+  const formModeLabel = document.getElementById("formModeLabel");
+  const mainActionBtn = document.getElementById("mainActionBtn");
+  const clearBtn = document.getElementById("clearBtn");
+  const cancelEditBtn = document.getElementById("cancelEditBtn");
+
+  const aTitle = document.getElementById("aTitle");
+  const aMessage = document.getElementById("aMessage");
+  const aType = document.getElementById("aType");
+  const aDate = document.getElementById("aDate");
+  const aImportant = document.getElementById("aImportant");
+  const aExpiry = document.getElementById("aExpiry");
+
+  const previewBox = document.getElementById("previewBox");
+
+  const annList = document.getElementById("annList");
+  const searchBox = document.getElementById("searchBox");
+  const resetSearchBtn = document.getElementById("resetSearchBtn");
+  const showCount = document.getElementById("showCount");
+
+  const downloadBtn = document.getElementById("downloadBtn");
+
+  // default date = today
+  (function initDate(){
+    const t = new Date();
+    aDate.value = isoDate(t);
+  })();
+
+  function isoDate(d){
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+    return `${y}-${m}-${day}`;
+  }
+
+  /* =========================
+     LOAD FILE
+  ========================= */
+  fileInput.addEventListener("change", (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+
+    loadedFileName = file.name || "announcements.json";
+    fileNamePill.textContent = loadedFileName;
+
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      try{
+        let parsed = JSON.parse(ev.target.result);
+
+        // support both {announcements:[...]} and plain array [...]
+        if (Array.isArray(parsed)) parsed = { announcements: parsed };
+        if (!parsed.announcements) parsed.announcements = [];
+
+        annData = parsed;
+
+        exitEditMode();
+        updatePreview();
+        renderList();
+        alert("JSON loaded successfully.");
+      }catch(err){
+        console.error(err);
+        alert("Invalid JSON file.");
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  /* =========================
+     ID GENERATOR (999 DOWN BY COUNT)
+     - if currently 8 announcements -> next = 991
+  ========================= */
+  function getNextId(){
+    const count = annData.announcements.length || 0;
+    return 999 - count;
+  }
+
+  /* =========================
+     ADD / SAVE
+  ========================= */
+  mainActionBtn.addEventListener("click", ()=>{
+    if (editingIndex === null) addAnnouncement();
+    else saveEdit();
+  });
+
+  clearBtn.addEventListener("click", ()=> clearForm(true));
+
+  cancelEditBtn.addEventListener("click", ()=>{
+    exitEditMode();
+    clearForm(true);
+  });
+
+  function readForm(){
+    const title = aTitle.value.trim();
+    const message = aMessage.value.trim();
+    const type = (aType.value || "info").trim();
+    const date = aDate.value;
+    const important = aImportant.value === "true";
+    const expires = aExpiry.value || "";
+    return { title, message, type, date, important, expires };
+  }
+
+  function validateForm(obj){
+    if(!obj.title || !obj.message || !obj.date){
+      alert("Please fill Title, Message, and Date.");
+      return false;
+    }
+    return true;
+  }
+
+  function addAnnouncement(){
+    if(!annData.announcements) annData.announcements = [];
+
+    const f = readForm();
+    if(!validateForm(f)) return;
+
+    const newAnn = {
+      id: getNextId(),
+      title: f.title,
+      message: f.message,
+      date: f.date,
+      type: f.type,
+      important: f.important
+    };
+    if (f.expires) newAnn.expires = f.expires;
+
+    // add at TOP
+    annData.announcements.unshift(newAnn);
+
+    clearForm(false);
+    updatePreview();
+    renderList();
+    alert(`Added. New ID: ${newAnn.id}`);
+  }
+
+  function enterEditMode(index){
+    editingIndex = index;
+
+    const a = annData.announcements[index];
+    if(!a) return;
+
+    formModeLabel.textContent = "Edit";
+    mainActionBtn.textContent = "💾 Save changes";
+    cancelEditBtn.style.display = "inline-block";
+
+    // Fill inputs
+    aTitle.value = a.title || "";
+    aMessage.value = a.message || "";
+    aType.value = (a.type || "info").toLowerCase();
+    aDate.value = a.date || isoDate(new Date());
+    aImportant.value = String(!!a.important);
+    aExpiry.value = a.expires || "";
+
+    // scroll to form
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function saveEdit(){
+    if (editingIndex === null) return;
+
+    const f = readForm();
+    if(!validateForm(f)) return;
+
+    const a = annData.announcements[editingIndex];
+    if(!a) return;
+
+    // Keep same ID
+    a.title = f.title;
+    a.message = f.message;
+    a.type = f.type;
+    a.date = f.date;
+    a.important = f.important;
+
+    if (f.expires) a.expires = f.expires;
+    else delete a.expires;
+
+    exitEditMode();
+    clearForm(false);
+    updatePreview();
+    renderList();
+    alert("Changes saved.");
+  }
+
+  function exitEditMode(){
+    editingIndex = null;
+    formModeLabel.textContent = "Add";
+    mainActionBtn.textContent = "➕ Add (append on top)";
+    cancelEditBtn.style.display = "none";
+  }
+
+  function clearForm(resetDate=true){
+    aTitle.value = "";
+    aMessage.value = "";
+    aType.value = "info";
+    aImportant.value = "false";
+    aExpiry.value = "";
+    if(resetDate) aDate.value = isoDate(new Date());
+  }
+
+  function deleteAnnouncement(index){
+    const a = annData.announcements[index];
+    if(!a) return;
+
+    const ok = confirm(`Delete this announcement?\n\n[${a.type || "info"}] ${a.title || ""}`);
+    if(!ok) return;
+
+    annData.announcements.splice(index, 1);
+
+    // if we were editing something, cancel edit mode (safe behavior)
+    if (editingIndex !== null) exitEditMode();
+
+    updatePreview();
+    renderList();
+  }
+
+  /* =========================
+     PREVIEW
+  ========================= */
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, s => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[s]));
+  }
+
+  function updatePreview(){
+    const total = annData.announcements?.length || 0;
+    if(!total){
+      previewBox.innerHTML = "Loaded, but no announcements found.";
+      return;
+    }
+    const latest = annData.announcements[0];
+    previewBox.innerHTML = `
+      <b>Total:</b> ${total}<br>
+      <b>Next ID (new add):</b> ${getNextId()}<br>
+      <b>Top announcement:</b> [${escapeHtml(latest.type ?? "info")}] ${escapeHtml(latest.title ?? "—")}<br>
+      <b>Date:</b> ${escapeHtml(latest.date ?? "—")} • <b>Expires:</b> ${escapeHtml(latest.expires ?? "—")}
+    `;
+  }
+
+  /* =========================
+     LIST RENDER (with search)
+  ========================= */
+  function badgeClass(type){
+    const t = (type || "info").toLowerCase();
+    if (t === "urgent") return "urgent";
+    if (t === "exam") return "exam";
+    return "info";
+  }
+
+  function renderList(){
+    if(!annList) return;
+
+    const q = (searchBox.value || "").trim().toLowerCase();
+    const arr = annData.announcements || [];
+
+    const filtered = !q ? arr : arr.filter(a=>{
+      const blob = `${a.id||""} ${a.title||""} ${a.message||""} ${a.type||""} ${a.date||""} ${a.expires||""} ${a.important?"important":""}`.toLowerCase();
+      return blob.includes(q);
+    });
+
+    showCount.textContent = String(filtered.length);
+
+    annList.innerHTML = "";
+    if(!filtered.length){
+      annList.innerHTML = `<div class="muted">No announcements match your search.</div>`;
+      return;
+    }
+
+    // IMPORTANT: we need to operate on real indexes from original array
+    // So render with original indices.
+    filtered.forEach(a=>{
+      const index = arr.indexOf(a);
+
+      const type = (a.type || "info").toLowerCase();
+      const badge =
+        type === "urgent" ? "🚨 urgent" :
+        type === "exam" ? "📝 exam" : "ℹ️ info";
+
+      const imp = a.important ? "⭐ important" : "";
+      const exp = a.expires ? `• expires: ${a.expires}` : "";
+
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <div class="item-top">
+          <div class="meta">
+            <span class="badge ${badgeClass(type)}">${badge}</span>
+            <span class="badge">id: ${a.id ?? "—"}</span>
+            <span class="badge">date: ${escapeHtml(a.date ?? "—")}</span>
+            ${imp ? `<span class="badge">${imp}</span>` : ""}
+            ${exp ? `<span class="badge">${escapeHtml(exp)}</span>` : ""}
+          </div>
+
+          <div class="item-actions">
+            <button class="small-btn" type="button" data-edit="${index}">Edit</button>
+            <button class="small-btn danger" type="button" data-del="${index}">Delete</button>
+          </div>
+        </div>
+
+        <div class="title">${escapeHtml(a.title ?? "")}</div>
+        <div class="msg">${escapeHtml(a.message ?? "")}</div>
+      `;
+
+      annList.appendChild(div);
+    });
+
+    // hook buttons
+    annList.querySelectorAll("[data-edit]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const idx = Number(btn.getAttribute("data-edit"));
+        enterEditMode(idx);
+      });
+    });
+
+    annList.querySelectorAll("[data-del]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const idx = Number(btn.getAttribute("data-del"));
+        deleteAnnouncement(idx);
+      });
+    });
+  }
+
+  searchBox.addEventListener("input", renderList);
+  resetSearchBtn.addEventListener("click", ()=>{
+    searchBox.value = "";
+    renderList();
+  });
+
+  /* =========================
+     DOWNLOAD (same filename)
+  ========================= */
+  downloadBtn.addEventListener("click", ()=>{
+    if(!annData.announcements || !annData.announcements.length){
+      alert("Nothing to export.");
+      return;
+    }
+    const blob = new Blob([JSON.stringify(annData, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = loadedFileName || "announcements.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  // initial render empty
+  renderList();
+
+  /* =========================
+   SIMPLE ADMIN PASSWORD
+========================= */
+
+// ⚠️ CHANGE THIS
+const ADMIN_PASSWORD = window.FMPT_ADMIN_PASS;; // <-- put your real one
+
+const lock = document.getElementById("adminLock");
+const app  = document.getElementById("adminApp");
+const pass = document.getElementById("adminPass");
+const btn  = document.getElementById("adminLoginBtn");
+const err  = document.getElementById("adminError");
+
+// already logged in?
+if (sessionStorage.getItem("fmpt_admin_ok") === "1") {
+  unlockAdmin();
+}
+
+function unlockAdmin(){
+  if (lock) lock.style.display = "none";
+  if (app)  app.style.display = "block";
+}
+
+function tryLogin(){
+  if (pass.value === ADMIN_PASSWORD){
+    sessionStorage.setItem("fmpt_admin_ok","1");
+    unlockAdmin();
+  } else {
+    err.style.display = "block";
+    pass.value = "";
+    pass.focus();
+  }
+}
+
+btn.addEventListener("click", tryLogin);
+
+pass.addEventListener("keydown", (e)=>{
+  if (e.key === "Enter") tryLogin();
+});
+
+</script>
+
+</body>
+</html>
