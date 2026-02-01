@@ -190,6 +190,126 @@
       display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
       font-size:12px;color:rgba(255,255,255,.85)
     }
+    .support-card{
+  border-radius:22px;
+  padding:22px;
+  border:1px solid rgba(255,255,255,.16);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  backdrop-filter: blur(10px);
+}
+
+.support-card h2{
+  font-family: 'Playfair Display', serif;
+  font-size:22px;
+  margin-bottom:10px;
+  color:#FFF2C7;
+}
+
+.support-card p{
+  color:#C7D5E6;
+  line-height:1.6;
+  font-size:15px;
+  margin-bottom:14px;
+}
+
+.support-list{
+  margin:0 0 16px 18px;
+  color:#EAF0F7;
+}
+.support-list li{
+  margin:8px 0;
+  color:#C7D5E6;
+  line-height:1.5;
+}
+.support-list b{color:#EAF0F7}
+
+.support-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.support-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.06);
+  color:#EAF0F7;
+  text-decoration:none;
+  font-weight:800;
+  font-size:12px;
+  transition:.2s ease;
+}
+
+.support-btn.primary{
+  border:none;
+  background: linear-gradient(135deg, var(--gold), #FFD36B);
+  color:#3B2A00;
+  box-shadow:0 12px 30px rgba(255,167,0,.25);
+}
+.support-btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.10)}
+.support-btn.primary:hover{filter:brightness(1.04)}
+
+.support-note{
+  margin-top:14px;
+  font-size:12px;
+  color:#9FB4CF;
+  opacity:.9;
+}
+/* ===== Support Book Layout ===== */
+
+.support-book{
+  display:flex;
+  gap:24px;
+  align-items:center;
+}
+
+.support-book-text{
+  flex:1 1 60%;
+  min-width:0;
+}
+
+.support-book-img{
+  flex:0 0 240px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.support-book-img img{
+  width:100%;
+  max-width:240px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.04);
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
+  transition:.3s ease;
+}
+
+.support-book-img img:hover{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+}
+
+/* Mobile stacking */
+@media(max-width:720px){
+  .support-book{
+    flex-direction:column-reverse;
+    text-align:center;
+  }
+
+  .support-book-img{
+    flex:0 0 auto;
+  }
+
+  .support-actions{
+    justify-content:center;
+  }
+}
 
     footer{
       max-width:1100px;margin:0 auto;
@@ -261,6 +381,53 @@
           Please verify important announcements via official channels. — The creator
         </div>
       </div>
+      <div class="support-card support-book">
+
+  <div class="support-book-text">
+    <h2>📚 Support by Buying Physical Books</h2>
+
+    <p>
+      If you prefer studying on paper, you can support FMPT Hub by buying our
+      <b>printed exam books</b>.
+      <b>Digital versions will always remain free</b> — printed copies simply help
+      cover hosting, domain, and development costs.
+    </p>
+
+    <ul class="support-list">
+      <li><b>Only useful content:</b> no unnecessary pages or filler material.</li>
+
+      <li><b>Smart compilation:</b> repeated questions across years are merged into
+          one clean exam where each question appears only once.</li>
+
+      <li><b>Premium binding:</b> we do <b>not</b> use cheap plastic spirals.
+          Our books are bound with <b>metal spirals or hardcover binding</b>
+          for durability and comfort.</li>
+    </ul>
+
+    <div class="support-actions">
+      <a class="support-btn primary"
+         href="https://discord.gg/84Jutvjk8k"
+         target="_blank" rel="noopener">
+         Request Printed Copy
+      </a>
+
+      <a class="support-btn"
+         href="mailto:FMPTSTUDENT@gmail.com?subject=FMPT%20Hub%20Printed%20Books">
+         Contact by Email
+      </a>
+    </div>
+
+    <div class="support-note">
+      Your support keeps FMPT Hub independent, free, and sustainable.
+    </div>
+  </div>
+
+  <!-- Book Image -->
+  <div class="support-book-img">
+    <img src="book-example.png" alt="FMPT Hub Printed Book Example">
+  </div>
+
+</div>
 
       <div class="card w-40">
         <h3>💸 What your support pays for</h3>
@@ -409,6 +576,7 @@
   </script>
 </body>
 </html>
+
 
 
 
