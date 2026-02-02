@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contribute — FMPT Hub</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold:#FFA700;
+      --blue:#0C4D9B;
+      --deep:#071B33;
+      --text:#EAF0F7;
+      --muted:#9FB4CF;
+      --glass:rgba(255,255,255,.08);
+      --border:rgba(255,255,255,.16);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 800px at 10% -10%, rgba(255,167,0,.16), transparent 40%),
+        radial-gradient(900px 650px at 90% 10%, rgba(12,77,155,.30), transparent 48%),
+        linear-gradient(180deg, #050E1B, #071B33 60%, #050E1B);
+    }
+
+    header{
+      position:sticky; top:0; z-index:10;
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:16px 22px;
+      background:linear-gradient(180deg, rgba(7,27,51,.75), rgba(7,27,51,.30));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none; color:var(--text);
+    }
+    .logo-slot{
+      width:120px; height:42px;
+      border-radius:12px;
+      border:1px dashed rgba(255,255,255,.22);
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.6); font-size:12px; letter-spacing:.1em;
+      overflow:hidden;
+    }
+    .logo-slot img{max-width:100%; max-height:100%; object-fit:contain}
+    .brand-title{
+      display:flex; flex-direction:column; line-height:1.1;
+    }
+    .brand-title b{font-weight:900}
+    .brand-title span{font-size:12px; color:var(--muted)}
+
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end;
+    }
+    .pill{
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:#C7D5E6; font-size:12px;
+      white-space:nowrap;
+    }
+
+    main{max-width:1100px; margin:0 auto; padding:26px 16px 80px}
+    .hero{
+      text-align:center;
+      margin:12px auto 22px;
+      position:relative;
+    }
+    h1{
+      font-family:"Playfair Display",serif;
+      font-size:clamp(34px,5.5vw,56px);
+      line-height:1.05;
+      margin-bottom:10px;
+      background:linear-gradient(90deg, #FFF3C4, var(--gold), #8FC2FF);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .sub{
+      max-width:820px;
+      margin:0 auto;
+      color:#C7D5E6;
+      font-size:15px;
+      line-height:1.55;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      margin-top:18px;
+    }
+    @media(max-width:900px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      border-radius:22px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.04));
+      backdrop-filter: blur(10px);
+      box-shadow:0 18px 55px rgba(0,0,0,.35);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .card h2{
+      font-family:"Playfair Display",serif;
+      font-size:20px;
+      color:#FFF2C7;
+      margin-bottom:10px;
+    }
+    .muted{color:var(--muted)}
+    .small{font-size:13px; line-height:1.55}
+
+    .cta-row{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      border-radius:14px;
+      padding:12px 16px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      display:inline-flex; align-items:center; gap:10px;
+      cursor:pointer;
+      transition:.18s ease;
+      font-weight:900;
+      font-size:13px;
+      user-select:none;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.10)}
+    .btn:active{transform:translateY(0) scale(.98)}
+    .btn.primary{
+      border:none;
+      background:linear-gradient(135deg, var(--gold), #FFD36B);
+      color:#3B2A00;
+      box-shadow:0 12px 30px rgba(255,167,0,.20);
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media(max-width:700px){.steps{grid-template-columns:1fr}}
+
+    .step{
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      padding:12px;
+    }
+    .step b{display:block; margin-bottom:4px; color:#FFF2C7}
+    .step span{color:#C7D5E6; font-size:13px; line-height:1.45}
+
+    .list{
+      display:flex; flex-direction:column; gap:10px;
+      margin-top:10px;
+    }
+    .rule{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:#C7D5E6;
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .code{
+      margin-top:10px;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(5,14,27,.45);
+      color:#D8ECFF;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:12px;
+      overflow:auto;
+      white-space:pre;
+    }
+
+    .glow{
+      position:absolute;
+      width:580px; height:580px;
+      left:50%; top:-200px;
+      transform:translateX(-50%);
+      background:radial-gradient(circle at center, rgba(255,167,0,.18), transparent 68%);
+      filter:blur(80px);
+      z-index:-1;
+    }
+
+    footer{
+      text-align:center;
+      padding:28px 16px 18px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* tiny toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      background:#071b33eb;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:14px;
+      padding:10px 12px;
+      color:#EAF0F7;
+      font-size:13px;
+      display:none;
+      z-index:99;
+      box-shadow:0 18px 55px rgba(0,0,0,.35);
+    }
+    .toast.show{display:block; animation:pop .2s ease}
+    @keyframes pop{from{transform:translateX(-50%) translateY(8px);opacity:.2}to{transform:translateX(-50%) translateY(0);opacity:1}}
+  </style>
+</head>
+
+<body>
+  <div class="glow"></div>
+
+  <header>
+    <a class="brand" href="./index.html">
+      <div class="logo-slot">
+        <!-- Optional: your logo -->
+        <!-- <img src="logo.png" alt="FMPT Hub"> -->
+        LOGO
+      </div>
+      <div class="brand-title">
+        <b>FMPT Hub</b>
+        <span>By students, for students</span>
+      </div>
+    </a>
+
+    <div class="nav">
+      <span class="pill">Contributions are verified ✅</span>
+      <span class="pill">Digital stays free 💛</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Contribute to FMPT Hub</h1>
+      <p class="sub">
+        This platform grows only when students share. If you have past exams, corrections, lecture PDFs,
+        or clean notes — send them here. We’ll organize everything, verify it, and keep it easy to navigate.
+        You can contribute anonymously or get credited (your choice).
+      </p>
+    </section>
+
+    <section class="grid">
+      <!-- Primary contribution methods -->
+      <div class="card">
+        <h2>🚀 Quickest way to contribute</h2>
+        <p class="small muted">
+          Use the form for clean organization. Discord is great for fast drop-offs and questions.
+          Email is for edge cases.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn primary" id="formBtn" href="https://forms.gle/xnVDcxywcfwykqJT8" target="_blank" rel="noopener">
+            📤 Submit Files (Google Form)
+          </a>
+          <a class="btn" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">
+            💬 Contribute via Discord
+          </a>
+          <a class="btn" id="emailBtn" href="mailto:FMPTSTUDENT@gmail.com?subject=FMPT%20Hub%20Contribution&body=Track%3A%20Medicine%2FPharmacy%0D%0AYear%3A%20Year%20_%0D%0ACourse%3A%20_%0D%0AType%3A%20Exam%2FCorrection%2FNotes%2FSlides%0D%0AAcademic%20Year%3A%20_%0D%0ASession%3A%20Normal%2FRattrapage%0D%0A%0D%0AOptional%3A%20Credit%20me%20as%3A%20_%0D%0ADiscord%3A%20_%0D%0A">
+            ✉️ Email Contribution
+          </a>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <b>1) Submit</b>
+            <span>Upload the PDF + fill track/year/course/type.</span>
+          </div>
+          <div class="step">
+            <b>2) Verify</b>
+            <span>We check readability, correctness, duplicates, and labeling.</span>
+          </div>
+          <div class="step">
+            <b>3) Publish</b>
+            <span>We place it in the correct module page and credit you if you want.</span>
+          </div>
+          <div class="step">
+            <b>4) Keep it free</b>
+            <span>Digital resources stay free. Always.</span>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="rule">
+          <b style="color:#FFF2C7">Privacy:</b>
+          You can submit anonymously. If you want credit, write the name/handle you want shown.
+          The website owner is listed only as <b>“FMPT Student”</b>.
+        </div>
+      </div>
+
+      <!-- Rules + naming guide -->
+      <div class="card">
+        <h2>✅ What we accept</h2>
+
+        <div class="list">
+          <div class="rule">📄 <b style="color:#FFF2C7">PDF only</b> (preferably scanned clearly, not screenshots).</div>
+          <div class="rule">🔎 <b style="color:#FFF2C7">Readable</b>: good contrast, correct orientation, not cut off.</div>
+          <div class="rule">📝 <b style="color:#FFF2C7">Exams</b>: tell us Normal / Rattrapage + academic year.</div>
+          <div class="rule">⭐ <b style="color:#FFF2C7">Corrections</b> are highly valued (even partial).</div>
+          <div class="rule">🚫 No fake info: we remove anything misleading or unverified.</div>
+        </div>
+
+        <h2 style="margin-top:14px">🗂 Suggested file naming</h2>
+        <p class="small muted">Not required, but it helps us organize faster.</p>
+        <div class="code">anatomie1_exam_normal_2022-2023.pdf
+anatomie1_corr_normal_2022-2023.pdf
+anatomie1_exam_rattrapage_2022-2023.pdf
+anatomie1_corr_rattrapage_2022-2023.pdf
+
+aggouri_thorax.pdf
+benali_membre-sup.pdf</div>
+
+        <div class="cta-row" style="margin-top:12px">
+          <button class="btn" id="copyGuideBtn" type="button">📋 Copy naming guide</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 — FMPT Hub • Contributions are verified • Digital stays free
+  </footer>
+
+  <div class="toast" id="toast">Copied.</div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(window.__t);
+      window.__t = setTimeout(()=>toast.classList.remove("show"), 1600);
+    }
+
+    document.getElementById("copyGuideBtn").addEventListener("click", async ()=>{
+      const txt =
+`Suggested file naming (optional):
+anatomie1_exam_normal_2022-2023.pdf
+anatomie1_corr_normal_2022-2023.pdf
+anatomie1_exam_rattrapage_2022-2023.pdf
+anatomie1_corr_rattrapage_2022-2023.pdf
+
+Course PDFs (example):
+aggouri_thorax.pdf
+benali_membre-sup.pdf`;
+
+      try{
+        await navigator.clipboard.writeText(txt);
+        showToast("Naming guide copied ✅");
+      }catch(e){
+        showToast("Couldn’t copy — select & copy manually.");
+      }
+    });
+
+
+  </script>
+</body>
+</html>
