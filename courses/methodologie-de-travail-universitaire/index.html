@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MTU — Méthodologie de Travail Universitaire · FMPT Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --gold:#FFA700;--blue:#0C4D9B;--deep:#071B33;--soft:#F4F7FB;--accent:#E6C36A;
+      --glass:rgba(255,255,255,.08);--border:rgba(255,255,255,.18);
+      --text:#EAF0F7;--muted:#C7D5E6;
+      --ok:rgba(120, 220, 180, .20);
+      --warn:rgba(255, 167, 0, .18);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,sans-serif;
+      background:radial-gradient(1200px 800px at 10% -10%, rgba(255,167,0,0.15), transparent 40%),
+                 radial-gradient(800px 600px at 90% 10%, rgba(12,77,155,0.25), transparent 45%),
+                 linear-gradient(180deg, #050E1B, #071B33 60%, #050E1B);
+      color:var(--text);min-height:100vh;overflow-x:hidden;
+    }
+
+    header{
+      position:sticky;top:0;z-index:10;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:16px 28px;
+      background:linear-gradient(180deg, rgba(7,27,51,.75), rgba(7,27,51,.35));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .left{display:flex;align-items:center;gap:14px}
+    .logo{width:120px;height:42px;border-radius:10px;border:1px dashed rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:12px}
+    .crumbs{display:flex;flex-direction:column;gap:2px}
+    .crumbs .kicker{font-size:12px;color:rgba(255,255,255,.75)}
+    .crumbs .title{font-family:'Playfair Display',serif;font-size:20px;color:#FFF2C7;line-height:1}
+
+    .actions{display:flex;gap:10px;align-items:center}
+    .btn{
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:14px;
+      padding:10px 14px;
+      font-weight:600;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;align-items:center;gap:8px;
+      transition:.18s ease;
+    }
+    .btn:hover{background:rgba(255,255,255,.12);transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(135deg, var(--gold), #FFD36B);color:#3B2A00;border:none}
+
+    main{max-width:1200px;margin:auto;padding:28px 20px 80px}
+
+    .stack{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:22px;
+    }
+    .card h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:10px;color:#FFF2C7}
+    .muted{color:var(--muted);}
+
+    .w-60{flex:1 1 60%}
+    .w-40{flex:1 1 38%}
+    .w-50{flex:1 1 48%}
+    .w-30{flex:1 1 30%}
+    .w-70{flex:1 1 68%}
+
+    @media (max-width: 900px){
+      header{padding:14px 16px}
+      .w-60,.w-40,.w-50,.w-30,.w-70{flex:1 1 100%}
+      .logo{width:96px}
+    }
+
+    details{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      border-radius:16px;
+      padding:10px 12px;
+      margin-top:10px;
+    }
+    summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      font-weight:700;
+    }
+    summary::-webkit-details-marker{display:none}
+    .sum-right{font-size:12px;color:rgba(255,255,255,.75);font-weight:600}
+
+    .list{
+      margin-top:10px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding-left:2px;
+    }
+
+    .link{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      text-decoration:none;
+      transition:.18s ease;
+    }
+    .link:hover{
+      background:rgba(255,167,0,.14);
+      border-color:rgba(255,167,0,.45);
+      transform:translateX(2px);
+    }
+    .link small{opacity:.75}
+
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      font-size:12px;
+      color:rgba(255,255,255,.88);
+    }
+    .pill.ok{background:var(--ok);border-color:rgba(120,220,180,.45)}
+    .pill.warn{background:var(--warn);border-color:rgba(255,167,0,.45)}
+
+    .note{
+      width:100%;
+      min-height:180px;
+      border-radius:16px;
+      padding:12px;
+      background:rgba(255,255,255,.08);
+      color:white;
+      border:1px solid rgba(255,255,255,.2);
+      resize:vertical;
+      outline:none;
+    }
+
+    footer{
+      max-width:1200px;
+      margin:0 auto;
+      padding:18px 20px 30px;
+      color:rgba(255,255,255,.65);
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .footer-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+    .footer-row a{color:rgba(255,255,255,.75);text-decoration:none}
+    .footer-row a:hover{color:#fff}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="left">
+    <div class="logo">LOGO</div>
+    <div class="crumbs">
+      <div class="kicker">FMPT Hub · Courses</div>
+      <div class="title">MTU (Méthodologie de Travail Universitaire)</div>
+    </div>
+  </div>
+  <div class="actions">
+    <a class="btn" href="../../index.html">← Dashboard</a>
+    <a class="btn primary" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">💬 Get help</a>
+  </div>
+</header>
+
+<main>
+  <section class="stack">
+
+    <div class="card w-60">
+      <h3>👋 Welcome</h3>
+      <p class="muted" style="line-height:1.55">
+        Here you’ll find everything for <b>MTU</b>: professor course files, official ministry source, activities, and the <b>2025–2026</b> exams with professor corrections.
+        Keep it simple: follow the recommended files, do the activities, and stay alert to any student-presented content (it can show up in the exam).
+      </p>
+      <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px">
+        <span class="pill">📌 By students, for students</span>
+        <span class="pill ok">✅ 2025–2026 focused</span>
+        <span class="pill warn">⚠️ Pre-2025 exams not relevant</span>
+      </div>
+    </div>
+
+    <div class="card w-40">
+      <h3>📣 Module Announcements</h3>
+      <p class="muted" style="line-height:1.55">
+        The <b>travail hebdomadaire</b> must be submitted by <b>January 30</b> to
+        <a href="mailto:qa.hanane@gmail.com" style="color:rgba(255,255,255,.9);text-decoration:none">qa.hanane@gmail.com</a>.
+      </p>
+    </div>
+    </div>
+
+    <!-- ===== 1) Current Course Support ===== -->
+    <div class="card w-70">
+      <h3>🎓 Current Course Support</h3>
+      <p class="muted">Everything below is organized for <b>2025–2026</b>. Study priority: <b>COURS MAGISTRAUX (presentation)</b> ✅</p>
+
+      <details open>
+        <summary>
+          <span>👩‍🏫 Pr. Hanane Qaidi</span>
+          <span class="sum-right">2025–2026</span>
+        </summary>
+
+        <details open>
+          <summary>
+            <span>✅ COURS MAGISTRAUX (presentation) — preferred</span>
+            <span class="sum-right">8 items</span>
+          </summary>
+          <div class="list">
+            <a class="link" href="./pdfs/MTU -CHAPITRE 1- LA VIE A L'UNIVERSITE 1.pdf" target="_blank" rel="noopener"><span>MTU — Chapitre 1 — La vie à l’université (1)</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/MTU -CHAPITRE 1- LA VIE A L'UNIVERSITE 2.pdf" target="_blank" rel="noopener"><span>MTU — Chapitre 1 — La vie à l’université (2)</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/MTU -CHAPITRE 2 - LES STYLES D’APPRENTISSAGE 1.pdf" target="_blank" rel="noopener"><span>MTU — Chapitre 2 — Les styles d’apprentissage (1)</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/MTU -CHAPITRE 2 - LES STYLES D’APPRENTISSAGE 2.pdf" target="_blank" rel="noopener"><span>MTU — Chapitre 2 — Les styles d’apprentissage (2)</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/MTU -CHAPITRE 3 - LES TECHNIQUES DE RECHERHCE 1.pdf" target="_blank" rel="noopener"><span>MTU — Chapitre 3 — Les techniques de recherche (1)</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/MTU -CHAPITRE 3 - LES TECHNIQUES DE RECHERHCE 2.pdf" target="_blank" rel="noopener"><span>MTU — Chapitre 3 — Les techniques de recherche (2)</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/MTU -CHAPITRE 4 - LES TECHNIQUES DE TRAITEMENT D'INFORMATION 1.pdf" target="_blank" rel="noopener"><span>MTU — Chapitre 4 — Techniques de traitement d’information (1)</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/MTU -CHAPITRE 4 - LES TECHNIQUES DE TRAITEMENT D'INFORMATION 2.pdf" target="_blank" rel="noopener"><span>MTU — Chapitre 4 — Techniques de traitement d’information (2)</span><small>PDF</small></a>
+          </div>
+          <div style="margin-top:10px" class="pill ok">⭐ Recommended: study these first — they match the teacher’s style for 2025–2026.</div>
+          <div style="margin-top:8px" class="pill warn">ℹ️ Note: Chapitre 4 (2) is <b>not included</b> in the 2025–2026 exam.</div>
+        </details>
+
+        <details>
+          <summary>
+            <span>🏛️ Official course (Ministry source)</span>
+            <span class="sum-right">4 chapters</span>
+          </summary>
+          <div class="list">
+            <a class="link" href="./pdfs/M1 LA VIE À L'UNIVERSITÉ.pdf" target="_blank" rel="noopener"><span>MTU — Chapter 1 — University life</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/M2 LES STYLES D’APPRENTISSAGE.pdf" target="_blank" rel="noopener"><span>MTU — Chapter 2 — Learning styles</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/M3 LES TECHNIQUES DE RECHERCHE.pdf" target="_blank" rel="noopener"><span>MTU — Chapter 3 — Research techniques</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/M4 LES TECHNIQUES DE TRAITEMENT.pdf" target="_blank" rel="noopener"><span>MTU — Chapter 4 — Information processing techniques</span><small>PDF</small></a>
+          </div>
+          <div style="margin-top:10px" class="pill">💡 Use this as a backup/reference, but prioritize the presentations above.</div>
+        </details>
+
+        <details>
+          <summary>
+            <span>🧩 Activities (provided)</span>
+            <span class="sum-right">2 items</span>
+          </summary>
+          <div class="list">
+            <a class="link" href="./pdfs/fiche-technique.pdf" target="_blank" rel="noopener"><span>Fiche informatique sur l’université</span><small>PDF</small></a>
+            <a class="link" href="./pdfs/travail-hebdomadaire.pdf" target="_blank" rel="noopener"><span>Travail hebdomadaire</span><small>PDF</small></a>
+          </div>
+          <div style="margin-top:10px" class="pill warn">✅ Tip: the activities can show up directly or indirectly in the exam.</div>
+        </details>
+
+      </details>
+
+      <div style="margin-top:15px" class="pill">💡 Tip: In Medicine 2025–2026, our professor included student-presented presentations in the exam — expect her to do the same.</div>
+    </div>
+
+    <!-- ===== 2) Past Exams ===== -->
+    <div class="card w-30">
+      <h3>🧾 Exams (2025–2026)</h3>
+      <p class="muted" style="line-height:1.55">
+        <b>Pre-2025–2026 exams are NOT relevant</b> (new teacher, new teaching, new exams).
+        That’s why only this year’s exam + the mock exam are included here.
+      </p>
+      <div style="margin-top:10px" class="pill ok">✅ Corrections below are <b>from the professor</b>.</div>
+
+      <details open>
+        <summary><span>📅 2025–2026</span><span class="sum-right">5 files</span></summary>
+        <div class="list">
+          <a class="link" href="./pdfs/BILAN-MTU-25.pdf" target="_blank" rel="noopener"><span>Exam bilan</span><small>PDF</small></a>
+          <a class="link" href="./pdfs/CORRIGE-BILAN-MTU-25.pdf" target="_blank" rel="noopener"><span>Exam bilan — Correction (Prof)</span><small>PDF</small></a>
+          <a class="link" href="./pdfs/" target="_blank" rel="noopener"><span>Exam normale</span><small>PDF</small></a>
+          <a class="link" href="./pdfs/" target="_blank" rel="noopener"><span>Exam normale — Correction (Prof)</span><small>PDF</small></a>
+        </div>
+      </details>
+
+      <div class="link" style="margin-top: 10px;opacity:.7;cursor:not-allowed" onclick="return false;">
+        <span>High-quality physical print (with correction)</span>
+        <small>Unavailable (too few files)</small>
+      </div>
+    </div>
+
+    <!-- ===== 3) Notes ===== -->
+    <div class="card w-50">
+      <h3>🗒 Notes (Shared)</h3>
+      <p class="muted">Drop your own notes here or paste links. (Local-only for now.)</p>
+      <textarea class="note" id="mtuNotes" placeholder="Write your MTU notes here… (local-only for now)"></textarea>
+      <div style="margin-top:10px" class="pill">💾 Saved locally on your device</div>
+    </div>
+
+    <!-- ===== 4) Study Tools / Ideas ===== -->
+    <div class="card w-50">
+      <h3>🧠 Study Toolkit</h3>
+      <div class="list">
+        <a class="link" href="#" onclick="return false;"><span>✅ Checklist (coming soon)</span><small>Idea</small></a>
+        <a class="link" href="#" onclick="return false;"><span>🧩 Flashcards (coming soon)</span><small>Idea</small></a>
+        <a class="link" href="#" onclick="return false;"><span>🗂 Activities tracker (coming soon)</span><small>Idea</small></a>
+        <a class="link" href="#" onclick="return false;"><span>⭐ Best resources pack (coming soon)</span><small>Idea</small></a>
+      </div>
+      <div style="margin-top:10px" class="pill">💡 we are still working on tools that will vastly help you in your study journey.</div>
+    </div>
+
+    <!-- ===== 5) Quick Links ===== -->
+    <div class="card w-40">
+      <h3>🔗 Quick Links</h3>
+      <div class="list">
+        <a class="link" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener"><span>💬 Ask a question (Discord)</span><small>Open</small></a>
+        <a class="link" href="mailto:qa.hanane@gmail.com"><span>✉️ Submit work (email)</span><small>qa.hanane@gmail.com</small></a>
+        <a class="link" href="#" onclick="return false;"><span>📁 Drive folder (placeholder)</span><small>Soon</small></a>
+      </div>
+      
+    </div>
+
+    <!-- ===== 6) Contribute ===== -->
+    <div class="card w-60">
+      <h3>💛 Contribute</h3>
+      <p class="muted">Help keep MTU organized: share the student presentations, upload files, or report broken links.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px">
+        <a class="btn primary" href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">📤 Share something (Discord)</a>
+        <a class="btn" href="#" onclick="alert('Later: add a Formspree upload/request form here.');return false;">🧾 Report an issue</a>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  <div class="footer-row">
+    <div>© <span id="yearNow"></span> FMPT Hub · MTU</div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <a href="../../index.html">Dashboard</a>
+      <a href="https://discord.gg/84Jutvjk8k" target="_blank" rel="noopener">Discord</a>
+      <a href="#" onclick="alert('Add your contact page later');return false;">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Footer year
+  document.getElementById('yearNow').textContent = new Date().getFullYear();
+
+  // Local notes for MTU (device-only)
+  const notes = document.getElementById('mtuNotes');
+  if (notes) {
+    const key = 'fmpt_mtu_notes';
+    notes.value = localStorage.getItem(key) || '';
+    notes.addEventListener('input', () => localStorage.setItem(key, notes.value));
+  }
+</script>
+
+</body>
+</html>
